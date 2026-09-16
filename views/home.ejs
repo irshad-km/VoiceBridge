@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="VoiceBridge translates voice messages into another language and gives you the translation as natural audio.">
+
+    <title>VoiceBridge — Speak. Translate. Understand.</title>
+
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+        <div class="container navbar-inner">
+
+            <a href="/" class="logo">
+                <span class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M12 14.5C13.66 14.5 15 13.16 15 11.5V6.5C15 4.84 13.66 3.5 12 3.5C10.34 3.5 9 4.84 9 6.5V11.5C9 13.16 10.34 14.5 12 14.5Z"
+                            stroke="currentColor" stroke-width="1.8" />
+                        <path d="M18 10.5V11.5C18 14.81 15.31 17.5 12 17.5C8.69 17.5 6 14.81 6 11.5V10.5"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                        <path d="M12 17.5V21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                        <path d="M9 21H15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </span>
+
+                <span>VoiceBridge</span>
+            </a>
+
+            <nav class="desktop-nav">
+                <a href="/" class="nav-link active">Home</a>
+                <a href="/translate" class="nav-link">Translate</a>
+                <a href="/how-it-works" class="nav-link">How It Works</a>
+                <a href="/about" class="nav-link">About</a>
+            </nav>
+
+            <div class="navbar-actions">
+                <a href="/translate" class="nav-cta">
+                    Try VoiceBridge
+                </a>
+
+                <button class="menu-button" id="menuButton" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Mobile Menu -->
+
+        <div class="mobile-menu" id="mobileMenu">
+
+            <a href="/" class="mobile-link">Home</a>
+            <a href="/translate" class="mobile-link">Translate</a>
+            <a href="/how-it-works" class="mobile-link">How It Works</a>
+            <a href="/about" class="mobile-link">About</a>
+
+            <a href="/translate" class="mobile-cta">
+                Try VoiceBridge
+            </a>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- ================= HERO ================= -->
+
+        <section class="hero section">
+
+            <div class="hero-glow hero-glow-one"></div>
+            <div class="hero-glow hero-glow-two"></div>
+
+            <div class="container hero-grid">
+
+                <!-- Hero Content -->
+
+                <div class="hero-content reveal">
+
+                    <div class="eyebrow">
+                        <span class="status-dot"></span>
+                        AI VOICE TRANSLATION
+                    </div>
+
+                    <h1>
+                        Speak in Your Language.
+                        <span>Understand in Any Language.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Translate voice messages into another language
+                        and receive the translation as natural audio.
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <a href="/translate" class="primary-button">
+                            <span>Translate Voice</span>
+
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.8"
+                                    stroke-linecap="round" />
+                                <path d="M13 6L19 12L13 18" stroke="currentColor" stroke-width="1.8"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+
+                        <a href="#how-it-works" class="secondary-button">
+                            See How It Works
+                        </a>
+
+                    </div>
+
+                    <div class="hero-note">
+                        <span class="check-icon">✓</span>
+                        Record or upload your voice
+                        <span class="note-divider"></span>
+                        No complicated setup
+                    </div>
+
+                </div>
+
+
+                <!-- Hero Voice Visual -->
+
+                <div class="hero-visual reveal">
+
+                    <div class="visual-orbit orbit-one"></div>
+                    <div class="visual-orbit orbit-two"></div>
+
+                    <div class="voice-card">
+
+                        <div class="voice-card-top">
+                            <span>Voice translation</span>
+
+                            <span class="live-badge">
+                                <span></span>
+                                READY
+                            </span>
+                        </div>
+
+                        <div class="voice-stage">
+
+                            <div class="wave wave-one"></div>
+                            <div class="wave wave-two"></div>
+                            <div class="wave wave-three"></div>
+
+                            <div class="mic-button">
+
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M12 14.5C13.66 14.5 15 13.16 15 11.5V6.5C15 4.84 13.66 3.5 12 3.5C10.34 3.5 9 4.84 9 6.5V11.5C9 13.16 10.34 14.5 12 14.5Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.8" />
+                                    <path
+                                        d="M18 10.5V11.5C18 14.81 15.31 17.5 12 17.5C8.69 17.5 6 14.81 6 11.5V10.5"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round" />
+                                    <path
+                                        d="M12 17.5V21"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round" />
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+                        <div class="language-flow">
+
+                            <div class="language-item">
+                                <span class="language-label">YOUR VOICE</span>
+                                <strong>Malayalam</strong>
+                            </div>
+
+                            <div class="language-arrow">
+                                →
+                            </div>
+
+                            <div class="language-item target-language">
+                                <span class="language-label">TRANSLATE TO</span>
+                                <strong>English</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PRODUCT PREVIEW ================= -->
+
+        <section class="section preview-section">
+
+            <div class="container">
+
+                <div class="section-heading centered reveal">
+
+                    <div class="mini-label">
+                        SIMPLE BY DESIGN
+                    </div>
+
+                    <h2>
+                        Voice translation made simple.
+                    </h2>
+
+                    <p>
+                        One voice message. One translation. One natural audio result.
+                    </p>
+
+                </div>
+
+
+                <div class="translator-preview reveal">
+
+                    <div class="preview-header">
+
+                        <div>
+                            <span class="preview-title">VoiceBridge</span>
+                            <span class="preview-status">Translation preview</span>
+                        </div>
+
+                        <div class="preview-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="preview-content">
+
+                        <!-- Original -->
+
+                        <div class="preview-message">
+
+                            <div class="message-label">
+                                <span class="message-icon microphone-icon">
+                                    🎙
+                                </span>
+
+                                <div>
+                                    <small>YOUR VOICE</small>
+                                    <strong>Malayalam</strong>
+                                </div>
+                            </div>
+
+                            <p>
+                                "നാളെ എനിക്ക് കോഴിക്കോട് പോകണം."
+                            </p>
+
+                            <div class="mini-player">
+
+                                <button class="play-button">
+                                    ▶
+                                </button>
+
+                                <div class="mini-wave">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+
+                                <span class="duration">0:08</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="preview-arrow">
+                            ↓
+                        </div>
+
+
+                        <!-- Translation -->
+
+                        <div class="preview-message translated-message">
+
+                            <div class="message-label">
+
+                                <span class="message-icon speaker-icon">
+                                    🔊
+                                </span>
+
+                                <div>
+                                    <small>TRANSLATED VOICE</small>
+                                    <strong>English</strong>
+                                </div>
+
+                            </div>
+
+                            <p>
+                                "I need to go to Kozhikode tomorrow."
+                            </p>
+
+                            <div class="mini-player">
+
+                                <button class="play-button active">
+                                    ▶
+                                </button>
+
+                                <div class="mini-wave blue-wave">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+
+                                <span class="duration">0:08</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="preview-actions">
+
+                        <a href="/translate" class="small-primary-button">
+                            Try a translation
+                            <span>→</span>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PROBLEM ================= -->
+
+        <section class="section problem-section">
+
+            <div class="container">
+
+                <div class="section-heading centered reveal">
+
+                    <div class="mini-label">
+                        THE PROBLEM
+                    </div>
+
+                    <h2>
+                        Language shouldn't be a barrier<br>
+                        to voice communication.
+                    </h2>
+
+                    <p>
+                        Voice messages are fast and natural.
+                        Understanding them shouldn't depend on the language.
+                    </p>
+
+                </div>
+
+
+                <div class="problem-grid">
+
+                    <article class="problem-card reveal">
+
+                        <div class="card-number">
+                            01
+                        </div>
+
+                        <div class="card-icon">
+                            ↓
+                        </div>
+
+                        <h3>Receive</h3>
+
+                        <p>
+                            Someone sends a voice message
+                            in a language you don't understand.
+                        </p>
+
+                    </article>
+
+
+                    <article class="problem-card reveal">
+
+                        <div class="card-number">
+                            02
+                        </div>
+
+                        <div class="card-icon">
+                            ✦
+                        </div>
+
+                        <h3>Translate</h3>
+
+                        <p>
+                            VoiceBridge converts the message
+                            and translates it into your language.
+                        </p>
+
+                    </article>
+
+
+                    <article class="problem-card reveal">
+
+                        <div class="card-number">
+                            03
+                        </div>
+
+                        <div class="card-icon">
+                            ◉
+                        </div>
+
+                        <h3>Understand</h3>
+
+                        <p>
+                            Listen to the translated message
+                            as natural voice audio.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= HOW IT WORKS ================= -->
+
+        <section class="section how-section" id="how-it-works">
+
+            <div class="container">
+
+                <div class="section-heading centered reveal">
+
+                    <div class="mini-label">
+                        HOW IT WORKS
+                    </div>
+
+                    <h2>
+                        From your voice<br>
+                        to their language.
+                    </h2>
+
+                    <p>
+                        A simple four-step process designed
+                        to make voice translation effortless.
+                    </p>
+
+                </div>
+
+
+                <div class="steps-wrapper">
+
+                    <div class="step-line"></div>
+
+
+                    <article class="step-card reveal">
+
+                        <div class="step-number">
+                            01
+                        </div>
+
+                        <div class="step-icon">
+                            🎙
+                        </div>
+
+                        <h3>Record or Upload</h3>
+
+                        <p>
+                            Record your voice directly
+                            or upload an existing audio file.
+                        </p>
+
+                    </article>
+
+
+                    <article class="step-card reveal">
+
+                        <div class="step-number">
+                            02
+                        </div>
+
+                        <div class="step-icon">
+                            Aa
+                        </div>
+
+                        <h3>Speech to Text</h3>
+
+                        <p>
+                            Your voice is converted
+                            into accurate text.
+                        </p>
+
+                    </article>
+
+
+                    <article class="step-card reveal">
+
+                        <div class="step-number">
+                            03
+                        </div>
+
+                        <div class="step-icon">
+                            ◇
+                        </div>
+
+                        <h3>Translate</h3>
+
+                        <p>
+                            The message is translated
+                            into your selected language.
+                        </p>
+
+                    </article>
+
+
+                    <article class="step-card reveal">
+
+                        <div class="step-number">
+                            04
+                        </div>
+
+                        <div class="step-icon">
+                            🔊
+                        </div>
+
+                        <h3>Generate Voice</h3>
+
+                        <p>
+                            Receive the translation
+                            as natural voice audio.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FEATURES ================= -->
+
+        <section class="section features-section">
+
+            <div class="container">
+
+                <div class="section-heading centered reveal">
+
+                    <div class="mini-label">
+                        FEATURES
+                    </div>
+
+                    <h2>
+                        Everything you need<br>
+                        for voice translation.
+                    </h2>
+
+                </div>
+
+
+                <div class="features-grid">
+
+                    <article class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            🎙
+                        </div>
+
+                        <h3>Record Voice</h3>
+
+                        <p>
+                            Record a voice message
+                            directly from your browser.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            ↑
+                        </div>
+
+                        <h3>Upload Audio</h3>
+
+                        <p>
+                            Upload an existing
+                            voice message easily.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            ◇
+                        </div>
+
+                        <h3>Multiple Languages</h3>
+
+                        <p>
+                            Choose your original
+                            and target language.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            🔊
+                        </div>
+
+                        <h3>Natural Audio</h3>
+
+                        <p>
+                            Listen to the translated
+                            message as voice.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            ↓
+                        </div>
+
+                        <h3>Download</h3>
+
+                        <p>
+                            Save the translated
+                            audio for later.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            ↗
+                        </div>
+
+                        <h3>Share</h3>
+
+                        <p>
+                            Share your translated
+                            result with others.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= LANGUAGES ================= -->
+
+        <section class="section languages-section">
+
+            <div class="container">
+
+                <div class="language-panel reveal">
+
+                    <div class="language-copy">
+
+                        <div class="mini-label">
+                            LANGUAGE SUPPORT
+                        </div>
+
+                        <h2>
+                            Start with the languages
+                            you use every day.
+                        </h2>
+
+                        <p>
+                            VoiceBridge is designed to grow with
+                            more languages over time.
+                        </p>
+
+                    </div>
+
+
+                    <div class="language-list">
+
+                        <span>Malayalam</span>
+                        <span>English</span>
+                        <span>Tamil</span>
+                        <span>Hindi</span>
+                        <span>Kannada</span>
+                        <span>Telugu</span>
+                        <span>Arabic</span>
+                        <span>Urdu</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CTA ================= -->
+
+        <section class="section cta-section">
+
+            <div class="container">
+
+                <div class="cta-card reveal">
+
+                    <div class="cta-glow"></div>
+
+                    <div class="cta-content">
+
+                        <div class="mini-label">
+                            VOICEBRIDGE
+                        </div>
+
+                        <h2>
+                            Ready to understand
+                            every voice?
+                        </h2>
+
+                        <p>
+                            Record or upload a voice message
+                            and experience voice translation in seconds.
+                        </p>
+
+                        <a href="/translate" class="primary-button cta-button">
+
+                            Start Translating
+
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M5 12H19"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round" />
+
+                                <path d="M13 6L19 12L13 18"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="container">
+
+            <div class="footer-top">
+
+                <div class="footer-brand">
+
+                    <a href="/" class="logo">
+
+                        <span class="logo-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M12 14.5C13.66 14.5 15 13.16 15 11.5V6.5C15 4.84 13.66 3.5 12 3.5C10.34 3.5 9 4.84 9 6.5V11.5C9 13.16 10.34 14.5 12 14.5Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.8" />
+                                <path
+                                    d="M18 10.5V11.5C18 14.81 15.31 17.5 12 17.5C8.69 17.5 6 14.81 6 11.5V10.5"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round" />
+                                <path
+                                    d="M12 17.5V21"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </span>
+
+                        VoiceBridge
+
+                    </a>
+
+                    <p>
+                        Voice communication without
+                        language barriers.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <a href="/">Home</a>
+                    <a href="/translate">Translate</a>
+                    <a href="/how-it-works">How It Works</a>
+                    <a href="/about">About</a>
+                    <a href="#">Privacy</a>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <span>
+                    © 2026 VoiceBridge. All rights reserved.
+                </span>
+
+                <span>
+                    Speak. Translate. Understand.
+                </span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="/js/home.js"></script>
+
+</body>
+
+</html>

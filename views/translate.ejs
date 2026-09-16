@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Translate Voice — VoiceBridge</title>
+
+  <link rel="stylesheet" href="/css/translate.css" />
+</head>
+
+<body>
+
+  <!-- Background -->
+  <div class="ambient ambient-blue"></div>
+  <div class="ambient ambient-violet"></div>
+
+
+  <!-- =========================
+       NAVBAR
+  ========================== -->
+
+  <header class="navbar">
+
+    <a href="/" class="brand">
+      <span class="brand-icon">
+        <i data-lucide="waves"></i>
+      </span>
+
+      <span>VoiceBridge</span>
+    </a>
+
+    <a href="/" class="back-home">
+      <i data-lucide="arrow-left"></i>
+      <span>Home</span>
+    </a>
+
+  </header>
+
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
+  <main class="page-container">
+
+    <!-- Header -->
+
+    <section class="page-header">
+
+      <span class="page-label">
+        <span class="label-dot"></span>
+        VOICE TRANSLATION
+      </span>
+
+      <h1>Translate Voice</h1>
+
+      <p>
+        Record a voice message or upload an audio file,
+        choose your languages, and get the translated voice.
+      </p>
+
+    </section>
+
+
+    <!-- =========================
+         MAIN TRANSLATOR
+    ========================== -->
+
+    <section class="translator-card">
+
+
+      <!-- Workflow -->
+
+      <div class="workflow">
+
+        <div class="workflow-step active">
+          <span>1</span>
+          <p>Add Voice</p>
+        </div>
+
+        <div class="workflow-line"></div>
+
+        <div class="workflow-step">
+          <span>2</span>
+          <p>Languages</p>
+        </div>
+
+        <div class="workflow-line"></div>
+
+        <div class="workflow-step">
+          <span>3</span>
+          <p>Translate</p>
+        </div>
+
+        <div class="workflow-line"></div>
+
+        <div class="workflow-step">
+          <span>4</span>
+          <p>Get Voice</p>
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           ADD VOICE
+      ========================== -->
+
+      <section class="section-block">
+
+        <div class="section-heading">
+
+          <div>
+            <span class="step-number">01</span>
+            <h2>Add Your Voice</h2>
+          </div>
+
+          <p>
+            Record a new message or use an existing audio file.
+          </p>
+
+        </div>
+
+
+        <!-- Tabs -->
+
+        <div class="input-tabs">
+
+          <button
+            class="input-tab active"
+            id="recordTab"
+            type="button"
+          >
+
+            <span class="tab-icon">
+              <i data-lucide="mic"></i>
+            </span>
+
+            <span>
+              <strong>Record Voice</strong>
+              <small>Record directly from your browser</small>
+            </span>
+
+          </button>
+
+
+          <button
+            class="input-tab"
+            id="uploadTab"
+            type="button"
+          >
+
+            <span class="tab-icon">
+              <i data-lucide="folder-up"></i>
+            </span>
+
+            <span>
+              <strong>Upload Audio</strong>
+              <small>Use an existing voice message</small>
+            </span>
+
+          </button>
+
+        </div>
+
+
+        <!-- =========================
+             RECORD PANEL
+        ========================== -->
+
+        <div
+          class="input-panel active"
+          id="recordPanel"
+        >
+
+          <div class="record-box" id="recordBox">
+
+            <div class="record-status">
+
+              <span class="record-indicator"></span>
+
+              <span id="recordStatus">
+                Ready to record
+              </span>
+
+            </div>
+
+
+            <!-- Microphone -->
+
+            <button
+              class="main-mic-button"
+              id="mainMicButton"
+              type="button"
+            >
+
+              <span class="mic-glow"></span>
+
+              <span class="mic-circle">
+                <i data-lucide="mic"></i>
+              </span>
+
+            </button>
+
+
+            <!-- Timer -->
+
+            <div
+              class="record-timer"
+              id="recordTimer"
+            >
+              00:00
+            </div>
+
+
+            <!-- Waveform -->
+
+            <div
+              class="record-wave"
+              id="recordWave"
+            >
+
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+
+            </div>
+
+
+            <!-- Recording controls -->
+
+            <div
+              class="record-controls"
+              id="recordControls"
+            >
+
+              <button
+                class="control-button"
+                id="pauseButton"
+                type="button"
+              >
+                <i data-lucide="pause"></i>
+                Pause
+              </button>
+
+              <button
+                class="stop-button"
+                id="stopButton"
+                type="button"
+              >
+                <span></span>
+                Stop
+              </button>
+
+            </div>
+
+
+            <p class="record-help">
+              Tap the microphone to start recording
+            </p>
+
+          </div>
+
+
+          <!-- Recorded Audio -->
+
+          <div
+            class="audio-result"
+            id="recordedAudioResult"
+          >
+
+            <div class="audio-result-header">
+
+              <div class="audio-result-title">
+
+                <span class="audio-icon">
+                  <i data-lucide="mic"></i>
+                </span>
+
+                <div>
+                  <strong>Recorded Voice</strong>
+                  <small id="recordedDuration">00:00</small>
+                </div>
+
+              </div>
+
+              <button
+                class="icon-button"
+                id="deleteRecording"
+                type="button"
+                aria-label="Delete recording"
+              >
+                <i data-lucide="trash-2"></i>
+              </button>
+
+            </div>
+
+
+            <audio
+              id="recordedAudio"
+              controls
+            ></audio>
+
+
+            <div class="result-actions">
+
+              <button
+                class="secondary-button"
+                id="recordAgain"
+                type="button"
+              >
+                <i data-lucide="rotate-ccw"></i>
+                Record Again
+              </button>
+
+              <button
+                class="primary-small"
+                id="useRecording"
+                type="button"
+              >
+                Use This Recording
+                <i data-lucide="arrow-right"></i>
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- =========================
+             UPLOAD PANEL
+        ========================== -->
+
+        <div
+          class="input-panel"
+          id="uploadPanel"
+        >
+
+          <label
+            class="drop-zone"
+            id="dropZone"
+            for="audioInput"
+          >
+
+            <input
+              type="file"
+              id="audioInput"
+              accept="audio/*"
+              hidden
+            />
+
+            <div class="drop-icon">
+              <i data-lucide="upload-cloud"></i>
+            </div>
+
+            <h3>Drop your audio here</h3>
+
+            <p>
+              or
+              <span>Browse Files</span>
+            </p>
+
+            <small>
+              MP3, WAV, M4A and WebM supported
+            </small>
+
+          </label>
+
+
+          <!-- Uploaded Audio -->
+
+          <div
+            class="audio-result"
+            id="uploadedAudioResult"
+          >
+
+            <div class="audio-result-header">
+
+              <div class="audio-result-title">
+
+                <span class="audio-icon">
+                  <i data-lucide="file-audio"></i>
+                </span>
+
+                <div>
+
+                  <strong id="uploadedFileName">
+                    voice-message
+                  </strong>
+
+                  <small id="uploadedFileInfo">
+                    0 KB · 00:00
+                  </small>
+
+                </div>
+
+              </div>
+
+
+              <button
+                class="icon-button"
+                id="removeUpload"
+                type="button"
+                aria-label="Remove audio"
+              >
+                <i data-lucide="trash-2"></i>
+              </button>
+
+            </div>
+
+
+            <audio
+              id="uploadedAudio"
+              controls
+            ></audio>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           LANGUAGE SELECTION
+      ========================== -->
+
+      <section
+        class="section-block language-section"
+        id="languageSection"
+      >
+
+        <div class="section-heading">
+
+          <div>
+            <span class="step-number">02</span>
+            <h2>Choose Languages</h2>
+          </div>
+
+          <p>
+            Select the language you speak and the language you need.
+          </p>
+
+        </div>
+
+
+        <div class="language-selector-grid">
+
+          <!-- Source -->
+
+          <div class="language-card">
+
+            <label>Your Voice</label>
+
+            <button
+              class="language-select"
+              id="sourceLanguage"
+              type="button"
+            >
+
+              <span class="language-content">
+
+                <span class="language-symbol">
+                  IN
+                </span>
+
+                <span>
+                  <strong>Malayalam</strong>
+                  <small>Source language</small>
+                </span>
+
+              </span>
+
+              <i data-lucide="chevron-down"></i>
+
+            </button>
+
+          </div>
+
+
+          <!-- Swap -->
+
+          <button
+            class="language-swap"
+            id="swapLanguages"
+            type="button"
+            aria-label="Swap languages"
+          >
+            <i data-lucide="arrow-right-left"></i>
+          </button>
+
+
+          <!-- Target -->
+
+          <div class="language-card">
+
+            <label>Translate To</label>
+
+            <button
+              class="language-select"
+              id="targetLanguage"
+              type="button"
+            >
+
+              <span class="language-content">
+
+                <span class="language-symbol">
+                  EN
+                </span>
+
+                <span>
+                  <strong>English</strong>
+                  <small>Target language</small>
+                </span>
+
+              </span>
+
+              <i data-lucide="chevron-down"></i>
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- Language Menu -->
+
+        <div
+          class="language-menu"
+          id="languageMenu"
+        >
+
+          <button data-language="Malayalam">
+            <span class="language-code">ML</span>
+            Malayalam
+          </button>
+
+          <button data-language="English">
+            <span class="language-code">EN</span>
+            English
+          </button>
+
+          <button data-language="Tamil">
+            <span class="language-code">TA</span>
+            Tamil
+          </button>
+
+          <button data-language="Hindi">
+            <span class="language-code">HI</span>
+            Hindi
+          </button>
+
+          <button data-language="Kannada">
+            <span class="language-code">KN</span>
+            Kannada
+          </button>
+
+          <button data-language="Telugu">
+            <span class="language-code">TE</span>
+            Telugu
+          </button>
+
+          <button data-language="Arabic">
+            <span class="language-code">AR</span>
+            Arabic
+          </button>
+
+          <button data-language="Urdu">
+            <span class="language-code">UR</span>
+            Urdu
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           TRANSLATE
+      ========================== -->
+
+      <section class="translate-section">
+
+        <div class="translate-divider"></div>
+
+
+        <button
+          class="translate-button"
+          id="translateButton"
+          type="button"
+          disabled
+        >
+
+          <span class="translate-button-icon">
+            <i data-lucide="sparkles"></i>
+          </span>
+
+          <span>
+            <strong>Translate Voice</strong>
+            <small>Convert your voice into another language</small>
+          </span>
+
+          <i
+            data-lucide="arrow-up-right"
+            class="translate-arrow"
+          ></i>
+
+        </button>
+
+        <p class="translate-note">
+          Your audio is processed securely.
+        </p>
+
+      </section>
+
+
+      <!-- =========================
+           PROCESSING
+      ========================== -->
+
+      <section
+        class="processing-section"
+        id="processingSection"
+      >
+
+        <div class="processing-icon">
+          <div class="processing-ring"></div>
+          <i data-lucide="languages"></i>
+        </div>
+
+        <h2>Translating your voice</h2>
+
+        <p>This may take a few seconds.</p>
+
+
+        <div class="processing-steps">
+
+          <div class="processing-step completed">
+
+            <span class="step-state">
+              <i data-lucide="check"></i>
+            </span>
+
+            <span>Audio received</span>
+
+          </div>
+
+
+          <div class="processing-step completed">
+
+            <span class="step-state">
+              <i data-lucide="check"></i>
+            </span>
+
+            <span>Speech detected</span>
+
+          </div>
+
+
+          <div class="processing-step active">
+
+            <span class="step-state"></span>
+
+            <span>Translating</span>
+
+          </div>
+
+
+          <div class="processing-step">
+
+            <span class="step-state"></span>
+
+            <span>Generating voice</span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           RESULT
+      ========================== -->
+
+      <section
+        class="translation-result"
+        id="translationResult"
+      >
+
+        <div class="result-heading">
+
+          <span class="step-number">04</span>
+
+          <div>
+            <h2>Your Translation</h2>
+            <p>Your translated voice is ready.</p>
+          </div>
+
+        </div>
+
+
+        <!-- Original -->
+
+        <div class="translation-card">
+
+          <div class="translation-card-top">
+
+            <span>ORIGINAL VOICE</span>
+
+            <span class="language-pill">
+              Malayalam
+            </span>
+
+          </div>
+
+
+          <p class="transcript">
+            "നാളെ എനിക്ക് കോഴിക്കോട് പോകണം."
+          </p>
+
+
+          <div class="result-player">
+
+            <button
+              class="play-result"
+              type="button"
+            >
+              <i data-lucide="play"></i>
+            </button>
+
+            <div class="result-wave">
+
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+
+            </div>
+
+            <span>00:08</span>
+
+          </div>
+
+        </div>
+
+
+        <!-- Translated -->
+
+        <div class="translation-card translated">
+
+          <div class="translation-card-top">
+
+            <span>TRANSLATED VOICE</span>
+
+            <span class="language-pill blue">
+              English
+            </span>
+
+          </div>
+
+
+          <p class="transcript">
+            "I need to go to Kozhikode tomorrow."
+          </p>
+
+
+          <div class="result-player">
+
+            <button
+              class="play-result"
+              type="button"
+            >
+              <i data-lucide="play"></i>
+            </button>
+
+            <div class="result-wave">
+
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+
+            </div>
+
+            <span>00:08</span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="listen-button"
+          type="button"
+        >
+
+          <i data-lucide="volume-2"></i>
+
+          Listen to Translation
+
+        </button>
+
+      </section>
+
+
+    </section>
+
+
+    <!-- =========================
+         TIP
+    ========================== -->
+
+    <div class="tip-box">
+
+      <span class="tip-icon">
+        <i data-lucide="lightbulb"></i>
+      </span>
+
+      <div>
+        <strong>Tip</strong>
+
+        <p>
+          For better translation accuracy, record clear speech
+          with minimal background noise.
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         RECENT
+    ========================== -->
+
+    <section class="recent-section">
+
+      <div class="recent-header">
+
+        <div>
+          <span class="section-mini-label">
+            YOUR ACTIVITY
+          </span>
+
+          <h2>Recent Translations</h2>
+        </div>
+
+        <button class="view-all">
+          View All
+          <i data-lucide="arrow-up-right"></i>
+        </button>
+
+      </div>
+
+
+      <div class="recent-list">
+
+        <div class="recent-item">
+
+          <div class="recent-language">
+            <span>ML</span>
+            <i data-lucide="arrow-right"></i>
+            <span>EN</span>
+          </div>
+
+          <div class="recent-content">
+
+            <strong>
+              "നാളെ എനിക്ക്..."
+            </strong>
+
+            <small>
+              2 minutes ago
+            </small>
+
+          </div>
+
+          <button class="recent-play">
+            <i data-lucide="play"></i>
+          </button>
+
+        </div>
+
+
+        <div class="recent-item">
+
+          <div class="recent-language">
+            <span>EN</span>
+            <i data-lucide="arrow-right"></i>
+            <span>ML</span>
+          </div>
+
+          <div class="recent-content">
+
+            <strong>
+              "Where are you..."
+            </strong>
+
+            <small>
+              18 minutes ago
+            </small>
+
+          </div>
+
+          <button class="recent-play">
+            <i data-lucide="play"></i>
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Error Toast -->
+
+  <div
+    class="error-toast"
+    id="errorToast"
+  >
+
+    <span>
+      <i data-lucide="alert-circle"></i>
+    </span>
+
+    <div>
+      <strong id="errorTitle">
+        Something went wrong
+      </strong>
+
+      <p id="errorMessage">
+        Please try again.
+      </p>
+    </div>
+
+    <button id="closeError">
+      <i data-lucide="x"></i>
+    </button>
+
+  </div>
+
+
+  <!-- Lucide -->
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script src="/js/translate.js"></script>
+
+</body>
+</html>
