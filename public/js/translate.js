@@ -20,30 +20,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const recordedAudioResult =
     document.getElementById("recordedAudioResult");
-  const recordedAudio = document.getElementById("recordedAudio");
-  const recordedDuration = document.getElementById("recordedDuration");
 
-  const deleteRecording = document.getElementById("deleteRecording");
-  const recordAgain = document.getElementById("recordAgain");
-  const useRecording = document.getElementById("useRecording");
+  const recordedAudio =
+    document.getElementById("recordedAudio");
 
-  const audioInput = document.getElementById("audioInput");
-  const dropZone = document.getElementById("dropZone");
+  const recordedDuration =
+    document.getElementById("recordedDuration");
+
+  const deleteRecording =
+    document.getElementById("deleteRecording");
+
+  const recordAgain =
+    document.getElementById("recordAgain");
+
+  const useRecording =
+    document.getElementById("useRecording");
+
+  const audioInput =
+    document.getElementById("audioInput");
+
+  const dropZone =
+    document.getElementById("dropZone");
 
   const uploadedAudioResult =
     document.getElementById("uploadedAudioResult");
-  const uploadedAudio = document.getElementById("uploadedAudio");
 
-  const uploadedFileName = document.getElementById("uploadedFileName");
-  const uploadedFileInfo = document.getElementById("uploadedFileInfo");
-  const removeUpload = document.getElementById("removeUpload");
+  const uploadedAudio =
+    document.getElementById("uploadedAudio");
 
-  const sourceLanguage = document.getElementById("sourceLanguage");
-  const targetLanguage = document.getElementById("targetLanguage");
-  const swapLanguages = document.getElementById("swapLanguages");
-  const languageMenu = document.getElementById("languageMenu");
+  const uploadedFileName =
+    document.getElementById("uploadedFileName");
 
-  const translateButton = document.getElementById("translateButton");
+  const uploadedFileInfo =
+    document.getElementById("uploadedFileInfo");
+
+  const removeUpload =
+    document.getElementById("removeUpload");
+
+  const sourceLanguage =
+    document.getElementById("sourceLanguage");
+
+  const targetLanguage =
+    document.getElementById("targetLanguage");
+
+  const swapLanguages =
+    document.getElementById("swapLanguages");
+
+  const languageMenu =
+    document.getElementById("languageMenu");
+
+  const translateButton =
+    document.getElementById("translateButton");
 
   const processingSection =
     document.getElementById("processingSection");
@@ -51,10 +78,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const translationResult =
     document.getElementById("translationResult");
 
-  const errorToast = document.getElementById("errorToast");
-  const errorTitle = document.getElementById("errorTitle");
-  const errorMessage = document.getElementById("errorMessage");
-  const closeError = document.getElementById("closeError");
+  const errorToast =
+    document.getElementById("errorToast");
+
+  const errorTitle =
+    document.getElementById("errorTitle");
+
+  const errorMessage =
+    document.getElementById("errorMessage");
+
+  const closeError =
+    document.getElementById("closeError");
 
 
   // ==========================================
@@ -77,8 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentAudioUrl = null;
 
-  // FIX:
-  // This variable was missing in your previous code.
   let selectedLanguageType = "source";
 
   const MAX_RECORDING_SECONDS = 60;
@@ -134,35 +166,53 @@ document.addEventListener("DOMContentLoaded", () => {
   // TAB SWITCHING
   // ==========================================
 
-  recordTab?.addEventListener("click", () => {
-    recordTab.classList.add("active");
-    uploadTab?.classList.remove("active");
+  recordTab?.addEventListener(
+    "click",
+    () => {
 
-    recordPanel?.classList.add("active");
-    uploadPanel?.classList.remove("active");
-  });
+      recordTab.classList.add("active");
+
+      uploadTab?.classList.remove("active");
+
+      recordPanel?.classList.add("active");
+
+      uploadPanel?.classList.remove("active");
+    }
+  );
 
 
-  uploadTab?.addEventListener("click", () => {
-    uploadTab.classList.add("active");
-    recordTab?.classList.remove("active");
+  uploadTab?.addEventListener(
+    "click",
+    () => {
 
-    uploadPanel?.classList.add("active");
-    recordPanel?.classList.remove("active");
-  });
+      uploadTab.classList.add("active");
+
+      recordTab?.classList.remove("active");
+
+      uploadPanel?.classList.add("active");
+
+      recordPanel?.classList.remove("active");
+    }
+  );
 
 
   // ==========================================
   // RECORDING
   // ==========================================
 
-  mainMicButton?.addEventListener("click", async () => {
-    if (mediaRecorder?.state === "recording") {
-      return;
-    }
+  mainMicButton?.addEventListener(
+    "click",
+    async () => {
 
-    await startRecording();
-  });
+      if (
+        mediaRecorder?.state === "recording"
+      ) {
+        return;
+      }
+
+      await startRecording();
+    }
+  );
 
 
   async function startRecording() {
@@ -171,14 +221,18 @@ document.addEventListener("DOMContentLoaded", () => {
       !navigator.mediaDevices ||
       !navigator.mediaDevices.getUserMedia
     ) {
+
       showError(
         "Microphone unavailable",
         "Your browser does not support microphone recording."
       );
+
       return;
     }
 
+
     clearUploadedAudio();
+
 
     try {
 
@@ -187,31 +241,49 @@ document.addEventListener("DOMContentLoaded", () => {
           audio: true
         });
 
-      const mimeType = getSupportedMimeType();
+
+      const mimeType =
+        getSupportedMimeType();
+
 
       if (mimeType) {
-        mediaRecorder = new MediaRecorder(
-          recordingStream,
-          {
-            mimeType
-          }
-        );
+
+        mediaRecorder =
+          new MediaRecorder(
+            recordingStream,
+            {
+              mimeType
+            }
+          );
+
       } else {
-        mediaRecorder = new MediaRecorder(
-          recordingStream
-        );
+
+        mediaRecorder =
+          new MediaRecorder(
+            recordingStream
+          );
       }
 
+
       audioChunks = [];
+
       recordingSeconds = 0;
+
       isPaused = false;
+
 
       mediaRecorder.addEventListener(
         "dataavailable",
         (event) => {
 
-          if (event.data && event.data.size > 0) {
-            audioChunks.push(event.data);
+          if (
+            event.data &&
+            event.data.size > 0
+          ) {
+
+            audioChunks.push(
+              event.data
+            );
           }
         }
       );
@@ -221,17 +293,29 @@ document.addEventListener("DOMContentLoaded", () => {
         "start",
         () => {
 
-          recordBox?.classList.add("recording");
+          recordBox?.classList.add(
+            "recording"
+          );
+
 
           if (recordStatus) {
-            recordStatus.textContent = "Recording...";
+
+            recordStatus.textContent =
+              "Recording...";
           }
+
 
           if (recordTimer) {
-            recordTimer.textContent = "00:00";
+
+            recordTimer.textContent =
+              "00:00";
           }
 
-          recordControls?.classList.add("show");
+
+          recordControls?.classList.add(
+            "show"
+          );
+
 
           startRecordingTimer();
 
@@ -246,9 +330,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
           isPaused = true;
 
+
           if (recordStatus) {
-            recordStatus.textContent = "Paused";
+
+            recordStatus.textContent =
+              "Paused";
           }
+
 
           updatePauseButton();
         }
@@ -261,9 +349,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
           isPaused = false;
 
+
           if (recordStatus) {
-            recordStatus.textContent = "Recording...";
+
+            recordStatus.textContent =
+              "Recording...";
           }
+
 
           updatePauseButton();
         }
@@ -286,7 +378,9 @@ document.addEventListener("DOMContentLoaded", () => {
         () => {
 
           stopRecordingTimer();
+
           stopRecordingStream();
+
 
           showError(
             "Recording failed",
@@ -300,11 +394,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     } catch (error) {
 
-      console.error("Microphone error:", error);
+      console.error(
+        "Microphone error:",
+        error
+      );
+
 
       stopRecordingStream();
 
-      if (error.name === "NotAllowedError") {
+
+      if (
+        error.name === "NotAllowedError"
+      ) {
 
         showError(
           "Microphone permission required",
@@ -334,15 +435,23 @@ document.addEventListener("DOMContentLoaded", () => {
       "audio/mp4"
     ];
 
-    for (const type of types) {
+
+    for (
+      const type of types
+    ) {
 
       if (
-        typeof MediaRecorder !== "undefined" &&
-        MediaRecorder.isTypeSupported(type)
+        typeof MediaRecorder !==
+          "undefined" &&
+        MediaRecorder.isTypeSupported(
+          type
+        )
       ) {
+
         return type;
       }
     }
+
 
     return "";
   }
@@ -356,42 +465,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
     stopRecordingTimer();
 
-    recordingTimer = setInterval(() => {
 
-      if (
-        !mediaRecorder ||
-        mediaRecorder.state !== "recording"
-      ) {
-        return;
-      }
+    recordingTimer =
+      setInterval(
+        () => {
 
-      recordingSeconds++;
+          if (
+            !mediaRecorder ||
+            mediaRecorder.state !==
+              "recording"
+          ) {
 
-      if (recordTimer) {
-        recordTimer.textContent =
-          formatTime(recordingSeconds);
-      }
+            return;
+          }
 
-      if (
-        recordingSeconds >= MAX_RECORDING_SECONDS
-      ) {
 
-        stopRecording();
+          recordingSeconds++;
 
-        showError(
-          "Recording limit reached",
-          "Voice messages can be up to 60 seconds long."
-        );
-      }
 
-    }, 1000);
+          if (recordTimer) {
+
+            recordTimer.textContent =
+              formatTime(
+                recordingSeconds
+              );
+          }
+
+
+          if (
+            recordingSeconds >=
+            MAX_RECORDING_SECONDS
+          ) {
+
+            stopRecording();
+
+
+            showError(
+              "Recording limit reached",
+              "Voice messages can be up to 60 seconds long."
+            );
+          }
+
+        },
+        1000
+      );
   }
 
 
   function stopRecordingTimer() {
 
     if (recordingTimer) {
-      clearInterval(recordingTimer);
+
+      clearInterval(
+        recordingTimer
+      );
+
       recordingTimer = null;
     }
   }
@@ -401,45 +529,69 @@ document.addEventListener("DOMContentLoaded", () => {
   // PAUSE / RESUME
   // ==========================================
 
-  pauseButton?.addEventListener("click", () => {
+  pauseButton?.addEventListener(
+    "click",
+    () => {
 
-    if (!mediaRecorder) return;
+      if (!mediaRecorder) {
+        return;
+      }
 
-    if (mediaRecorder.state === "recording") {
 
-      mediaRecorder.pause();
+      if (
+        mediaRecorder.state ===
+        "recording"
+      ) {
 
-    } else if (
-      mediaRecorder.state === "paused"
-    ) {
+        mediaRecorder.pause();
 
-      mediaRecorder.resume();
+      } else if (
+        mediaRecorder.state ===
+        "paused"
+      ) {
+
+        mediaRecorder.resume();
+      }
     }
-  });
+  );
 
 
   function updatePauseButton() {
 
-    if (!pauseButton) return;
+    if (!pauseButton) {
+      return;
+    }
+
 
     const icon =
-      pauseButton.querySelector("i");
+      pauseButton.querySelector(
+        "i"
+      );
+
 
     const text =
-      pauseButton.querySelector("span");
+      pauseButton.querySelector(
+        "span"
+      );
+
 
     if (isPaused) {
 
       if (text) {
-        text.textContent = "Resume";
+
+        text.textContent =
+          "Resume";
       }
+
 
       pauseButton.setAttribute(
         "aria-label",
         "Resume recording"
       );
 
+
       if (icon) {
+
         icon.setAttribute(
           "data-lucide",
           "play"
@@ -449,15 +601,20 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
 
       if (text) {
-        text.textContent = "Pause";
+
+        text.textContent =
+          "Pause";
       }
+
 
       pauseButton.setAttribute(
         "aria-label",
         "Pause recording"
       );
 
+
       if (icon) {
+
         icon.setAttribute(
           "data-lucide",
           "pause"
@@ -465,7 +622,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
+
     if (window.lucide) {
+
       lucide.createIcons();
     }
   }
@@ -478,6 +637,7 @@ document.addEventListener("DOMContentLoaded", () => {
   stopButton?.addEventListener(
     "click",
     () => {
+
       stopRecording();
     }
   );
@@ -489,9 +649,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+
     if (
-      mediaRecorder.state === "recording" ||
-      mediaRecorder.state === "paused"
+      mediaRecorder.state ===
+        "recording" ||
+      mediaRecorder.state ===
+        "paused"
     ) {
 
       mediaRecorder.stop();
@@ -506,24 +669,40 @@ document.addEventListener("DOMContentLoaded", () => {
   function finishRecording() {
 
     stopRecordingTimer();
+
     stopRecordingStream();
 
-    recordBox?.classList.remove("recording");
-    recordControls?.classList.remove("show");
+
+    recordBox?.classList.remove(
+      "recording"
+    );
+
+
+    recordControls?.classList.remove(
+      "show"
+    );
+
 
     if (recordStatus) {
-      recordStatus.textContent = "Recording complete";
+
+      recordStatus.textContent =
+        "Recording complete";
     }
 
-    const mimeType =
-      mediaRecorder?.mimeType || "audio/webm";
 
-    audioBlob = new Blob(
-      audioChunks,
-      {
-        type: mimeType
-      }
-    );
+    const mimeType =
+      mediaRecorder?.mimeType ||
+      "audio/webm";
+
+
+    audioBlob =
+      new Blob(
+        audioChunks,
+        {
+          type: mimeType
+        }
+      );
+
 
     if (!audioBlob.size) {
 
@@ -532,28 +711,55 @@ document.addEventListener("DOMContentLoaded", () => {
         "No audio was captured. Please try again."
       );
 
+
       resetRecordingState();
+
       return;
     }
 
+
     revokeCurrentAudioUrl();
 
+
     currentAudioUrl =
-      URL.createObjectURL(audioBlob);
+      URL.createObjectURL(
+        audioBlob
+      );
 
-    recordedAudio.src = currentAudioUrl;
 
-    recordedAudioResult?.classList.add("show");
+    if (recordedAudio) {
 
-    recordedDuration.textContent =
-      formatTime(recordingSeconds);
+      recordedAudio.src =
+        currentAudioUrl;
+    }
 
-    audioSource = "recording";
-    audioReady = true;
+
+    recordedAudioResult?.classList.add(
+      "show"
+    );
+
+
+    if (recordedDuration) {
+
+      recordedDuration.textContent =
+        formatTime(
+          recordingSeconds
+        );
+    }
+
+
+    audioSource =
+      "recording";
+
+    audioReady =
+      true;
+
 
     updateTranslateButton();
 
-    mediaRecorder = null;
+
+    mediaRecorder =
+      null;
   }
 
 
@@ -582,6 +788,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       resetRecordingState();
 
+
       showInfo(
         "Recording removed",
         "You can record a new voice message."
@@ -602,8 +809,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+
       const languageSection =
-        document.querySelector(".language-section");
+        document.querySelector(
+          ".language-section"
+        );
+
 
       languageSection?.scrollIntoView({
         behavior: "smooth",
@@ -620,53 +831,90 @@ document.addEventListener("DOMContentLoaded", () => {
   function resetRecordingState() {
 
     stopRecordingTimer();
+
     stopRecordingStream();
+
 
     if (
       mediaRecorder &&
       (
-        mediaRecorder.state === "recording" ||
-        mediaRecorder.state === "paused"
+        mediaRecorder.state ===
+          "recording" ||
+        mediaRecorder.state ===
+          "paused"
       )
     ) {
+
       try {
+
         mediaRecorder.stop();
+
       } catch (error) {
+
         console.warn(error);
       }
     }
 
+
     mediaRecorder = null;
+
     audioChunks = [];
 
     recordingSeconds = 0;
+
     isPaused = false;
 
     audioBlob = null;
 
+
     if (recordedAudio) {
+
       recordedAudio.pause();
-      recordedAudio.removeAttribute("src");
+
+      recordedAudio.removeAttribute(
+        "src"
+      );
+
       recordedAudio.load();
     }
 
-    recordedAudioResult?.classList.remove("show");
 
-    recordBox?.classList.remove("recording");
-    recordControls?.classList.remove("show");
+    recordedAudioResult?.classList.remove(
+      "show"
+    );
+
+
+    recordBox?.classList.remove(
+      "recording"
+    );
+
+
+    recordControls?.classList.remove(
+      "show"
+    );
+
 
     if (recordTimer) {
-      recordTimer.textContent = "00:00";
+
+      recordTimer.textContent =
+        "00:00";
     }
+
 
     if (recordStatus) {
-      recordStatus.textContent = "Ready to record";
+
+      recordStatus.textContent =
+        "Ready to record";
     }
 
+
     if (audioSource === "recording") {
+
       audioSource = null;
+
       audioReady = false;
     }
+
 
     revokeCurrentAudioUrl();
 
@@ -684,9 +932,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+
     recordingStream
       .getTracks()
-      .forEach((track) => track.stop());
+      .forEach(
+        (track) => track.stop()
+      );
+
 
     recordingStream = null;
   }
@@ -703,9 +955,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const file =
         event.target.files?.[0];
 
+
       if (!file) {
         return;
       }
+
 
       handleAudioFile(file);
     }
@@ -718,7 +972,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       event.preventDefault();
 
-      dropZone.classList.add("dragging");
+      dropZone.classList.add(
+        "dragging"
+      );
     }
   );
 
@@ -727,7 +983,9 @@ document.addEventListener("DOMContentLoaded", () => {
     "dragleave",
     () => {
 
-      dropZone.classList.remove("dragging");
+      dropZone.classList.remove(
+        "dragging"
+      );
     }
   );
 
@@ -738,27 +996,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
       event.preventDefault();
 
-      dropZone.classList.remove("dragging");
+
+      dropZone.classList.remove(
+        "dragging"
+      );
+
 
       const file =
         event.dataTransfer.files?.[0];
 
+
       if (!file) {
         return;
       }
+
 
       handleAudioFile(file);
     }
   );
 
 
-  async function handleAudioFile(file) {
+  async function handleAudioFile(
+    file
+  ) {
 
     const extension =
-      getFileExtension(file.name);
+      getFileExtension(
+        file.name
+      );
+
 
     const isAllowedExtension =
-      allowedExtensions.includes(extension);
+      allowedExtensions.includes(
+        extension
+      );
+
 
     const isAllowedMime =
       !file.type ||
@@ -777,62 +1049,95 @@ document.addEventListener("DOMContentLoaded", () => {
         "This audio format isn't supported. Please choose another file."
       );
 
+
       clearAudioInput();
+
       return;
     }
 
 
-    if (file.size > MAX_FILE_SIZE) {
+    if (
+      file.size >
+      MAX_FILE_SIZE
+    ) {
 
       showError(
         "File too large",
         "Please upload an audio file smaller than 10 MB."
       );
 
+
       clearAudioInput();
+
       return;
     }
 
 
     resetRecordingOnly();
 
-    uploadedFile = file;
+
+    uploadedFile =
+      file;
+
 
     revokeCurrentAudioUrl();
 
+
     currentAudioUrl =
-      URL.createObjectURL(file);
+      URL.createObjectURL(
+        file
+      );
 
-    uploadedAudio.src =
-      currentAudioUrl;
 
-    uploadedFileName.textContent =
-      file.name;
+    if (uploadedAudio) {
 
-    uploadedFileInfo.textContent =
-      formatFileSize(file.size);
+      uploadedAudio.src =
+        currentAudioUrl;
+    }
+
+
+    if (uploadedFileName) {
+
+      uploadedFileName.textContent =
+        file.name;
+    }
+
+
+    if (uploadedFileInfo) {
+
+      uploadedFileInfo.textContent =
+        formatFileSize(
+          file.size
+        );
+    }
+
 
     uploadedAudioResult?.classList.add(
       "show"
     );
 
 
-    uploadedAudio.addEventListener(
+    uploadedAudio?.addEventListener(
       "loadedmetadata",
       () => {
 
         const duration =
           uploadedAudio.duration;
 
+
         if (
-          !Number.isFinite(duration)
+          !Number.isFinite(
+            duration
+          )
         ) {
+
           return;
         }
 
 
         if (
-          duration > MAX_RECORDING_SECONDS
+          duration >
+          MAX_RECORDING_SECONDS
         ) {
 
           showError(
@@ -840,13 +1145,19 @@ document.addEventListener("DOMContentLoaded", () => {
             "Please upload a voice message shorter than 60 seconds."
           );
 
+
           clearUploadedAudio();
+
           return;
         }
 
 
-        audioSource = "upload";
-        audioReady = true;
+        audioSource =
+          "upload";
+
+        audioReady =
+          true;
+
 
         updateTranslateButton();
 
@@ -868,6 +1179,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       clearUploadedAudio();
 
+
       showInfo(
         "Audio removed",
         "You can upload another voice message."
@@ -880,23 +1192,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     uploadedFile = null;
 
+
     if (uploadedAudio) {
+
       uploadedAudio.pause();
-      uploadedAudio.removeAttribute("src");
+
+      uploadedAudio.removeAttribute(
+        "src"
+      );
+
       uploadedAudio.load();
     }
+
 
     uploadedAudioResult?.classList.remove(
       "show"
     );
 
+
     clearAudioInput();
 
-    if (audioSource === "upload") {
+
+    if (
+      audioSource === "upload"
+    ) {
 
       audioSource = null;
+
       audioReady = false;
     }
+
 
     updateTranslateButton();
   }
@@ -905,6 +1230,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function clearAudioInput() {
 
     if (audioInput) {
+
       audioInput.value = "";
     }
   }
@@ -917,28 +1243,43 @@ document.addEventListener("DOMContentLoaded", () => {
   function resetRecordingOnly() {
 
     stopRecordingTimer();
+
     stopRecordingStream();
 
     mediaRecorder = null;
+
     audioChunks = [];
 
     recordingSeconds = 0;
+
     isPaused = false;
 
     audioBlob = null;
 
+
     if (recordedAudio) {
+
       recordedAudio.pause();
-      recordedAudio.removeAttribute("src");
+
+      recordedAudio.removeAttribute(
+        "src"
+      );
+
       recordedAudio.load();
     }
+
 
     recordedAudioResult?.classList.remove(
       "show"
     );
 
-    if (audioSource === "recording") {
+
+    if (
+      audioSource === "recording"
+    ) {
+
       audioSource = null;
+
       audioReady = false;
     }
   }
@@ -952,51 +1293,61 @@ document.addEventListener("DOMContentLoaded", () => {
     .querySelectorAll(
       ".language-menu button[data-language]"
     )
-    .forEach((button) => {
+    .forEach(
+      (button) => {
 
-      button.addEventListener(
-        "click",
-        () => {
+        button.addEventListener(
+          "click",
+          () => {
 
-          const languageName =
-            button.dataset.language;
-
-          const languageCode =
-            button
-              .querySelector(".language-code")
-              ?.textContent
-              ?.trim() || "";
+            const languageName =
+              button.dataset.language;
 
 
-          const language = {
-            name: languageName,
-            code: languageCode
-          };
+            const languageCode =
+              button
+                .querySelector(
+                  ".language-code"
+                )
+                ?.textContent
+                ?.trim() || "";
 
 
-          if (
-            selectedLanguageType === "source"
-          ) {
+            const language = {
+              name:
+                languageName,
+              code:
+                languageCode
+            };
 
-            selectedSourceLanguage =
-              language;
 
-          } else {
+            if (
+              selectedLanguageType ===
+              "source"
+            ) {
 
-            selectedTargetLanguage =
-              language;
+              selectedSourceLanguage =
+                language;
+
+            } else {
+
+              selectedTargetLanguage =
+                language;
+            }
+
+
+            languageMenu?.classList.remove(
+              "show"
+            );
+
+
+            updateLanguageUI();
+
+            updateTranslateButton();
           }
-
-
-          languageMenu?.classList.remove(
-            "show"
-          );
-
-          updateLanguageUI();
-          updateTranslateButton();
-        }
-      );
-    });
+        );
+      }
+    );
 
 
   // ==========================================
@@ -1007,7 +1358,9 @@ document.addEventListener("DOMContentLoaded", () => {
     "click",
     () => {
 
-      selectedLanguageType = "source";
+      selectedLanguageType =
+        "source";
+
 
       languageMenu?.classList.toggle(
         "show"
@@ -1020,7 +1373,9 @@ document.addEventListener("DOMContentLoaded", () => {
     "click",
     () => {
 
-      selectedLanguageType = "target";
+      selectedLanguageType =
+        "target";
+
 
       languageMenu?.classList.toggle(
         "show"
@@ -1040,13 +1395,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const temp =
         selectedSourceLanguage;
 
+
       selectedSourceLanguage =
         selectedTargetLanguage;
+
 
       selectedTargetLanguage =
         temp;
 
+
       updateLanguageUI();
+
       updateTranslateButton();
     }
   );
@@ -1059,12 +1418,15 @@ document.addEventListener("DOMContentLoaded", () => {
       selectedSourceLanguage
     );
 
+
     updateLanguageButton(
       targetLanguage,
       selectedTargetLanguage
     );
 
+
     if (window.lucide) {
+
       lucide.createIcons();
     }
   }
@@ -1075,24 +1437,32 @@ document.addEventListener("DOMContentLoaded", () => {
     language
   ) {
 
-    if (!element) return;
+    if (!element) {
+      return;
+    }
+
 
     const name =
       element.querySelector(
         ".language-name"
       );
 
+
     const code =
       element.querySelector(
         ".language-code"
       );
 
+
     if (name) {
+
       name.textContent =
         language.name;
     }
 
+
     if (code) {
+
       code.textContent =
         language.code;
     }
@@ -1147,11 +1517,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+
     const languagesValid =
       selectedSourceLanguage.code &&
       selectedTargetLanguage.code &&
       selectedSourceLanguage.code !==
         selectedTargetLanguage.code;
+
 
     translateButton.disabled =
       !audioReady ||
@@ -1168,6 +1540,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const file =
       getCurrentAudioFile();
 
+
     if (!file) {
 
       showError(
@@ -1179,10 +1552,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // Show processing UI
-    translationResult?.classList.remove("show");
+    // ==========================================
+    // SHOW PROCESSING UI
+    // ==========================================
 
-    processingSection?.classList.add("show");
+    translationResult?.classList.remove(
+      "show"
+    );
+
+
+    processingSection?.classList.add(
+      "show"
+    );
 
 
     const processingSteps =
@@ -1193,6 +1574,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     processingSteps.forEach(
       (step) => {
+
         step.classList.remove(
           "active",
           "completed"
@@ -1202,30 +1584,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     if (processingSteps[0]) {
+
       processingSteps[0].classList.add(
         "active"
       );
     }
 
 
-    // Prevent double click
-    translateButton.disabled = true;
+    // ==========================================
+    // PREVENT DOUBLE CLICK
+    // ==========================================
+
+    translateButton.disabled =
+      true;
 
 
     try {
 
-      const formData = new FormData();
+      // ==========================================
+      // CREATE FORM DATA
+      // ==========================================
+
+      const formData =
+        new FormData();
+
 
       formData.append(
         "audio",
         file,
-        file.name || "voice.webm"
+        file.name ||
+          "voice.webm"
       );
+
 
       formData.append(
         "sourceLanguage",
         selectedSourceLanguage.code
       );
+
 
       formData.append(
         "targetLanguage",
@@ -1233,11 +1629,32 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
 
-      console.log("Sending audio to backend...");
-      console.log("Source:", selectedSourceLanguage.code);
-      console.log("Target:", selectedTargetLanguage.code);
-      console.log("File:", file);
+      console.log(
+        "Sending audio to backend..."
+      );
 
+
+      console.log(
+        "Source:",
+        selectedSourceLanguage.code
+      );
+
+
+      console.log(
+        "Target:",
+        selectedTargetLanguage.code
+      );
+
+
+      console.log(
+        "File:",
+        file
+      );
+
+
+      // ==========================================
+      // SEND REQUEST
+      // ==========================================
 
       const response =
         await fetch(
@@ -1249,6 +1666,10 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
+      // ==========================================
+      // READ RESPONSE
+      // ==========================================
+
       const data =
         await response.json();
 
@@ -1258,6 +1679,10 @@ document.addEventListener("DOMContentLoaded", () => {
         data
       );
 
+
+      // ==========================================
+      // CHECK RESPONSE
+      // ==========================================
 
       if (
         !response.ok ||
@@ -1272,7 +1697,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       // ==========================================
-      // BACKEND SUCCESS
+      // PROCESSING STEP 1
       // ==========================================
 
       if (processingSteps[0]) {
@@ -1281,98 +1706,170 @@ document.addEventListener("DOMContentLoaded", () => {
           "active"
         );
 
+
         processingSteps[0].classList.add(
           "completed"
         );
       }
 
 
+      // ==========================================
+      // PROCESSING STEP 2
+      // ==========================================
+
       if (processingSteps[1]) {
+
         processingSteps[1].classList.add(
           "active"
         );
       }
 
 
-      setTimeout(() => {
+      setTimeout(
+        () => {
 
-        if (processingSteps[1]) {
+          if (processingSteps[1]) {
 
-          processingSteps[1].classList.remove(
-            "active"
+            processingSteps[1].classList.remove(
+              "active"
+            );
+
+
+            processingSteps[1].classList.add(
+              "completed"
+            );
+          }
+
+
+          if (processingSteps[2]) {
+
+            processingSteps[2].classList.add(
+              "active"
+            );
+          }
+
+        },
+        700
+      );
+
+
+      // ==========================================
+      // PROCESSING STEP 3
+      // ==========================================
+
+      setTimeout(
+        () => {
+
+          if (processingSteps[2]) {
+
+            processingSteps[2].classList.remove(
+              "active"
+            );
+
+
+            processingSteps[2].classList.add(
+              "completed"
+            );
+          }
+
+
+          if (processingSteps[3]) {
+
+            processingSteps[3].classList.add(
+              "active"
+            );
+          }
+
+        },
+        1400
+      );
+
+
+      // ==========================================
+      // FINAL STEP + RESULT PAGE
+      // ==========================================
+
+      setTimeout(
+        () => {
+
+          if (processingSteps[3]) {
+
+            processingSteps[3].classList.remove(
+              "active"
+            );
+
+
+            processingSteps[3].classList.add(
+              "completed"
+            );
+          }
+
+
+          processingSection?.classList.remove(
+            "show"
           );
 
-          processingSteps[1].classList.add(
-            "completed"
-          );
-        }
+
+          // ==========================================
+          // SAVE RESULT
+          // ==========================================
+
+          const resultData = {
+
+            text:
+              data.text || "",
+
+            translatedText:
+              data.translatedText || "",
+
+            translatedAudioUrl:
+              data.translatedAudioUrl || "",
+
+            sourceLanguage:
+              selectedSourceLanguage.name,
+
+            sourceCode:
+              selectedSourceLanguage.code,
+
+            targetLanguage:
+              selectedTargetLanguage.name,
+
+            targetCode:
+              selectedTargetLanguage.code,
+
+            translationId:
+              data.translationId || null,
+
+            // Keep original audio temporarily
+            audioUrl:
+              currentAudioUrl || null
+          };
 
 
-        if (processingSteps[2]) {
-          processingSteps[2].classList.add(
-            "active"
-          );
-        }
-
-      }, 700);
-
-
-      setTimeout(() => {
-
-        if (processingSteps[2]) {
-
-          processingSteps[2].classList.remove(
-            "active"
-          );
-
-          processingSteps[2].classList.add(
-            "completed"
-          );
-        }
-
-
-        if (processingSteps[3]) {
-          processingSteps[3].classList.add(
-            "active"
-          );
-        }
-
-      }, 1400);
-
-
-      setTimeout(() => {
-
-        if (processingSteps[3]) {
-
-          processingSteps[3].classList.remove(
-            "active"
+          sessionStorage.setItem(
+            "translationResult",
+            JSON.stringify(
+              resultData
+            )
           );
 
-          processingSteps[3].classList.add(
-            "completed"
+
+          console.log(
+            "Translation result saved:",
+            resultData
           );
-        }
 
 
-        processingSection?.classList.remove(
-          "show"
-        );
+          // ==========================================
+          // GO TO RESULT PAGE
+          // ==========================================
 
+          window.location.href =
+            `/result?id=${data.translationId}`;
 
-        translationResult?.classList.add(
-          "show"
-        );
-
-
-        translationResult?.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-
-
-        translateButton.disabled = false;
-
-      }, 2200);
+        },
+        2200
+      );
 
 
     } catch (error) {
@@ -1388,12 +1885,14 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
 
-      translateButton.disabled = false;
+      translateButton.disabled =
+        false;
 
 
       showError(
-        "Upload failed",
-        "We couldn't send your audio to the server. Please try again."
+        "Translation failed",
+        error.message ||
+          "We couldn't process your audio. Please try again."
       );
     }
   }
@@ -1406,7 +1905,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function getCurrentAudioFile() {
 
     if (
-      audioSource === "recording" &&
+      audioSource ===
+        "recording" &&
       audioBlob
     ) {
 
@@ -1429,7 +1929,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     if (
-      audioSource === "upload" &&
+      audioSource ===
+        "upload" &&
       uploadedFile
     ) {
 
@@ -1450,28 +1951,44 @@ document.addEventListener("DOMContentLoaded", () => {
   ) {
 
     if (
-      mimeType.includes("mp4")
+      mimeType.includes(
+        "mp4"
+      )
     ) {
+
       return "mp4";
     }
 
+
     if (
-      mimeType.includes("mpeg")
+      mimeType.includes(
+        "mpeg"
+      )
     ) {
+
       return "mp3";
     }
 
+
     if (
-      mimeType.includes("wav")
+      mimeType.includes(
+        "wav"
+      )
     ) {
+
       return "wav";
     }
 
+
     if (
-      mimeType.includes("webm")
+      mimeType.includes(
+        "webm"
+      )
     ) {
+
       return "webm";
     }
+
 
     return "webm";
   }
@@ -1501,27 +2018,36 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+
     if (errorTitle) {
+
       errorTitle.textContent =
         title;
     }
 
+
     if (errorMessage) {
+
       errorMessage.textContent =
         message;
     }
+
 
     errorToast.classList.add(
       "show"
     );
 
-    setTimeout(() => {
 
-      errorToast.classList.remove(
-        "show"
-      );
+    setTimeout(
+      () => {
 
-    }, 5000);
+        errorToast.classList.remove(
+          "show"
+        );
+
+      },
+      5000
+    );
   }
 
 
@@ -1538,27 +2064,36 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+
     if (errorTitle) {
+
       errorTitle.textContent =
         title;
     }
 
+
     if (errorMessage) {
+
       errorMessage.textContent =
         message;
     }
+
 
     errorToast.classList.add(
       "show"
     );
 
-    setTimeout(() => {
 
-      errorToast.classList.remove(
-        "show"
-      );
+    setTimeout(
+      () => {
 
-    }, 3000);
+        errorToast.classList.remove(
+          "show"
+        );
+
+      },
+      3000
+    );
   }
 
 
@@ -1574,7 +2109,9 @@ document.addEventListener("DOMContentLoaded", () => {
         currentAudioUrl
       );
 
-      currentAudioUrl = null;
+
+      currentAudioUrl =
+        null;
     }
   }
 
@@ -1599,14 +2136,21 @@ document.addEventListener("DOMContentLoaded", () => {
   ) {
 
     if (bytes < 1024) {
+
       return `${bytes} B`;
     }
 
-    if (bytes < 1024 * 1024) {
+
+    if (
+      bytes <
+      1024 * 1024
+    ) {
+
       return `${(
         bytes / 1024
       ).toFixed(1)} KB`;
     }
+
 
     return `${(
       bytes /
@@ -1620,17 +2164,26 @@ document.addEventListener("DOMContentLoaded", () => {
   ) {
 
     const minutes =
-      Math.floor(seconds / 60);
+      Math.floor(
+        seconds / 60
+      );
+
 
     const remainingSeconds =
       seconds % 60;
 
-    return `${String(minutes).padStart(
+
+    return `${String(
+      minutes
+    ).padStart(
       2,
       "0"
     )}:${String(
       remainingSeconds
-    ).padStart(2, "0")}`;
+    ).padStart(
+      2,
+      "0"
+    )}`;
   }
 
 
@@ -1643,7 +2196,9 @@ document.addEventListener("DOMContentLoaded", () => {
     () => {
 
       stopRecordingTimer();
+
       stopRecordingStream();
+
       revokeCurrentAudioUrl();
     }
   );

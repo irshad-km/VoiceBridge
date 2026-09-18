@@ -24,6 +24,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // Public folder
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/", pageRoutes);
 app.use("/api", translateRoutes);

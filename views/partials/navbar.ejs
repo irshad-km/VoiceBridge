@@ -1,0 +1,890 @@
+<!-- =========================
+     VoiceBridge Navbar
+========================= -->
+
+<nav class="vb-navbar" id="vbNavbar">
+
+    <div class="vb-navbar-container">
+
+        <!-- Logo -->
+        <a href="/" class="vb-logo">
+
+            <span class="vb-logo-icon">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M12 15.5C14.4853 15.5 16.5 13.4853 16.5 11V6.5C16.5 4.01472 14.4853 2 12 2C9.51472 2 7.5 4.01472 7.5 6.5V11C7.5 13.4853 9.51472 15.5 12 15.5Z"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+
+                    <path
+                        d="M19.5 10.5V11C19.5 15.1421 16.1421 18.5 12 18.5C7.85786 18.5 4.5 15.1421 4.5 11V10.5"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M12 18.5V22"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M8.5 22H15.5"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+                </svg>
+            </span>
+
+            <span class="vb-logo-text">
+                Voice<span>Bridge</span>
+            </span>
+
+        </a>
+
+
+        <!-- Desktop Navigation -->
+        <div class="vb-nav-center">
+
+            <a
+                href="/"
+                class="vb-nav-link <%= currentPage === 'home' ? 'active' : '' %>"
+            >
+                Home
+            </a>
+
+            <a
+                href="/how-it-works"
+                class="vb-nav-link <%= currentPage === 'how-it-works' ? 'active' : '' %>"
+            >
+                How It Works
+            </a>
+
+            <a
+                href="/about"
+                class="vb-nav-link <%= currentPage === 'about' ? 'active' : '' %>"
+            >
+                About
+            </a>
+
+        </div>
+
+
+        <!-- Right Side -->
+        <div class="vb-nav-right">
+
+            <!-- CTA -->
+            <a href="/translate" class="vb-try-btn">
+                Try VoiceBridge
+                <span class="vb-arrow">→</span>
+            </a>
+
+
+            <!-- Mobile Menu Button -->
+            <button
+                class="vb-menu-btn"
+                id="vbMenuBtn"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         Mobile Menu
+    ========================= -->
+
+    <div class="vb-mobile-menu" id="vbMobileMenu">
+
+        <a
+            href="/"
+            class="vb-mobile-link <%= currentPage === 'home' ? 'active' : '' %>"
+        >
+            Home
+        </a>
+
+        <a
+            href="/how-it-works"
+            class="vb-mobile-link <%= currentPage === 'how-it-works' ? 'active' : '' %>"
+        >
+            How It Works
+        </a>
+
+        <a
+            href="/about"
+            class="vb-mobile-link <%= currentPage === 'about' ? 'active' : '' %>"
+        >
+            About
+        </a>
+
+        <a href="/translate" class="vb-mobile-cta">
+            Try VoiceBridge
+            <span>→</span>
+        </a>
+
+    </div>
+
+</nav>
+
+
+<style>
+
+/* =========================================
+   VoiceBridge Dark Blue Navbar
+========================================= */
+
+.vb-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    z-index: 9999;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(5, 18, 45, 0.96),
+            rgba(7, 25, 58, 0.92)
+        );
+
+    border-bottom: 1px solid rgba(96, 165, 250, 0.15);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 8px 35px rgba(2, 10, 30, 0.35),
+        inset 0 -1px 0 rgba(59, 130, 246, 0.06);
+
+    transition:
+        background 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
+/* =========================================
+   Navbar After Scroll
+========================================= */
+
+.vb-navbar.scrolled {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(3, 13, 34, 0.98),
+            rgba(5, 20, 48, 0.97)
+        );
+
+    border-bottom-color:
+        rgba(59, 130, 246, 0.22);
+
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.38),
+        0 0 35px rgba(37, 99, 235, 0.06);
+}
+
+
+/* =========================================
+   Container
+========================================= */
+
+.vb-navbar-container {
+    width: min(1180px, calc(100% - 40px));
+
+    height: 76px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+
+/* =========================================
+   Logo
+========================================= */
+
+.vb-logo {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    text-decoration: none;
+
+    color: #ffffff;
+
+    flex-shrink: 0;
+}
+
+
+.vb-logo-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    color: #60a5fa;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(37, 99, 235, 0.25),
+            rgba(14, 165, 233, 0.10)
+        );
+
+    border: 1px solid rgba(96, 165, 250, 0.25);
+
+    box-shadow:
+        0 0 25px rgba(37, 99, 235, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+    transition: all 0.3s ease;
+}
+
+
+.vb-logo-icon svg {
+    width: 23px;
+    height: 23px;
+}
+
+
+.vb-logo:hover .vb-logo-icon {
+    color: #93c5fd;
+
+    border-color:
+        rgba(96, 165, 250, 0.45);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(37, 99, 235, 0.35),
+            rgba(14, 165, 233, 0.16)
+        );
+
+    box-shadow:
+        0 0 30px rgba(37, 99, 235, 0.28);
+}
+
+
+.vb-logo-text {
+    font-size: 21px;
+
+    font-weight: 750;
+
+    letter-spacing: -0.5px;
+
+    color: #f8fafc;
+}
+
+
+.vb-logo-text span {
+    color: #60a5fa;
+}
+
+
+/* =========================================
+   Desktop Navigation
+========================================= */
+
+.vb-nav-center {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-left: auto;
+
+    margin-right: 10px;
+}
+
+
+.vb-nav-link {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 10px 15px;
+
+    color: #94a3b8;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    border-radius: 10px;
+
+    transition:
+        color 0.25s ease,
+        background 0.25s ease;
+}
+
+
+.vb-nav-link:hover {
+    color: #e2e8f0;
+
+    background:
+        rgba(59, 130, 246, 0.09);
+}
+
+
+.vb-nav-link.active {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(37, 99, 235, 0.17),
+            rgba(14, 165, 233, 0.07)
+        );
+}
+
+
+.vb-nav-link.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 3px;
+
+    width: 18px;
+
+    height: 2px;
+
+    transform: translateX(-50%);
+
+    border-radius: 999px;
+
+    background: #60a5fa;
+
+    box-shadow:
+        0 0 10px rgba(96, 165, 250, 0.65);
+}
+
+
+/* =========================================
+   Right Section
+========================================= */
+
+.vb-nav-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+/* =========================================
+   Try VoiceBridge Button
+========================================= */
+
+.vb-try-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 11px 18px;
+
+    border-radius: 11px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13.5px;
+
+    font-weight: 650;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    border:
+        1px solid rgba(147, 197, 253, 0.18);
+
+    box-shadow:
+        0 7px 22px rgba(37, 99, 235, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+
+.vb-try-btn:hover {
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #3b82f6,
+            #2563eb
+        );
+
+    box-shadow:
+        0 10px 30px rgba(37, 99, 235, 0.40);
+}
+
+
+.vb-arrow {
+    font-size: 17px;
+
+    line-height: 1;
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+.vb-try-btn:hover .vb-arrow {
+    transform: translateX(4px);
+}
+
+
+/* =========================================
+   Mobile Menu Button
+========================================= */
+
+.vb-menu-btn {
+    display: none;
+
+    width: 43px;
+    height: 43px;
+
+    padding: 0;
+
+    border-radius: 11px;
+
+    border:
+        1px solid rgba(96, 165, 250, 0.18);
+
+    background:
+        rgba(30, 64, 175, 0.12);
+
+    cursor: pointer;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+
+.vb-menu-btn span {
+    width: 19px;
+
+    height: 2px;
+
+    border-radius: 10px;
+
+    background: #cbd5e1;
+
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+}
+
+
+/* Hamburger → X */
+
+.vb-menu-btn.open span:nth-child(1) {
+    transform:
+        translateY(7px) rotate(45deg);
+}
+
+
+.vb-menu-btn.open span:nth-child(2) {
+    opacity: 0;
+}
+
+
+.vb-menu-btn.open span:nth-child(3) {
+    transform:
+        translateY(-7px) rotate(-45deg);
+}
+
+
+/* =========================================
+   Mobile Menu
+========================================= */
+
+.vb-mobile-menu {
+    display: none;
+
+    width: min(1180px, calc(100% - 40px));
+
+    margin: 0 auto;
+
+    padding: 10px 0 20px;
+
+    border-top:
+        1px solid rgba(96, 165, 250, 0.10);
+}
+
+
+.vb-mobile-link {
+    display: block;
+
+    padding: 14px;
+
+    margin-top: 3px;
+
+    border-radius: 10px;
+
+    color: #94a3b8;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.vb-mobile-link:hover {
+    color: #ffffff;
+
+    background:
+        rgba(59, 130, 246, 0.09);
+}
+
+
+.vb-mobile-link.active {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(37, 99, 235, 0.18),
+            rgba(14, 165, 233, 0.07)
+        );
+}
+
+
+/* Mobile CTA */
+
+.vb-mobile-cta {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 12px;
+
+    padding: 13px 18px;
+
+    border-radius: 11px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 650;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    box-shadow:
+        0 8px 25px rgba(37, 99, 235, 0.25);
+}
+
+
+.vb-mobile-cta span {
+    font-size: 17px;
+}
+
+
+/* =========================================
+   Responsive
+========================================= */
+
+@media (max-width: 900px) {
+
+    .vb-nav-center {
+        gap: 0;
+    }
+
+    .vb-nav-link {
+        padding: 9px 10px;
+
+        font-size: 13px;
+    }
+
+    .vb-try-btn {
+        padding: 10px 14px;
+    }
+}
+
+
+@media (max-width: 760px) {
+
+    .vb-navbar-container {
+        height: 68px;
+
+        width:
+            min(100% - 28px, 1180px);
+    }
+
+    .vb-nav-center {
+        display: none;
+    }
+
+    .vb-try-btn {
+        display: none;
+    }
+
+    .vb-menu-btn {
+        display: flex;
+    }
+
+    .vb-mobile-menu.show {
+        display: block;
+    }
+
+    .vb-mobile-menu {
+        width:
+            min(100% - 28px, 1180px);
+    }
+
+    .vb-logo-text {
+        font-size: 19px;
+    }
+
+    .vb-logo-icon {
+        width: 39px;
+        height: 39px;
+    }
+}
+
+
+@media (max-width: 400px) {
+
+    .vb-navbar-container {
+        width: calc(100% - 22px);
+    }
+
+    .vb-logo-text {
+        font-size: 18px;
+    }
+
+    .vb-logo-icon {
+        width: 37px;
+        height: 37px;
+    }
+}
+
+</style>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const navbar =
+        document.getElementById("vbNavbar");
+
+    const menuBtn =
+        document.getElementById("vbMenuBtn");
+
+    const mobileMenu =
+        document.getElementById("vbMobileMenu");
+
+
+    /* =========================================
+       Mobile Menu Toggle
+    ========================================= */
+
+    if (menuBtn && mobileMenu) {
+
+        menuBtn.addEventListener(
+            "click",
+            function () {
+
+                const isOpen =
+                    mobileMenu.classList.toggle("show");
+
+                menuBtn.classList.toggle(
+                    "open",
+                    isOpen
+                );
+
+                menuBtn.setAttribute(
+                    "aria-expanded",
+                    isOpen ? "true" : "false"
+                );
+
+                menuBtn.setAttribute(
+                    "aria-label",
+                    isOpen
+                        ? "Close navigation menu"
+                        : "Open navigation menu"
+                );
+
+            }
+        );
+
+
+        /* Close menu after clicking */
+
+        const mobileLinks =
+            mobileMenu.querySelectorAll("a");
+
+
+        mobileLinks.forEach(function (link) {
+
+            link.addEventListener(
+                "click",
+                function () {
+
+                    mobileMenu.classList.remove(
+                        "show"
+                    );
+
+                    menuBtn.classList.remove(
+                        "open"
+                    );
+
+                    menuBtn.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                    menuBtn.setAttribute(
+                        "aria-label",
+                        "Open navigation menu"
+                    );
+
+                }
+            );
+
+        });
+
+    }
+
+
+    /* =========================================
+       Navbar Scroll Effect
+    ========================================= */
+
+    function handleNavbarScroll() {
+
+        if (window.scrollY > 20) {
+
+            navbar.classList.add("scrolled");
+
+        } else {
+
+            navbar.classList.remove("scrolled");
+
+        }
+
+    }
+
+
+    handleNavbarScroll();
+
+
+    window.addEventListener(
+        "scroll",
+        handleNavbarScroll,
+        { passive: true }
+    );
+
+
+    /* =========================================
+       Close Mobile Menu On Resize
+    ========================================= */
+
+    window.addEventListener(
+        "resize",
+        function () {
+
+            if (window.innerWidth > 760) {
+
+                mobileMenu.classList.remove(
+                    "show"
+                );
+
+                menuBtn.classList.remove(
+                    "open"
+                );
+
+                menuBtn.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        }
+    );
+
+});
+
+</script>

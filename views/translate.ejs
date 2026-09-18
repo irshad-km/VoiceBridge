@@ -1,50 +1,1777 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Translate Voice — VoiceBridge</title>
 
-  <link rel="stylesheet" href="/css/translate.css" />
+  <link rel="stylesheet" href="/css/translate.css">
+
+  <style>
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    /* =====================================================
+       AMBIENT BLUE BACKGROUND
+    ===================================================== */
+
+    .ambient {
+      position: fixed;
+      pointer-events: none;
+      z-index: -10;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: .38;
+      will-change: transform;
+    }
+
+    .ambient-blue {
+      width: 430px;
+      height: 430px;
+      left: -170px;
+      top: 80px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(37, 99, 235, .25),
+          rgba(37, 99, 235, 0)
+        );
+
+      animation:
+        ambientBlueMove
+        14s
+        ease-in-out
+        infinite;
+    }
+
+    .ambient-violet {
+      width: 420px;
+      height: 420px;
+      right: -170px;
+      top: 35%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(99, 102, 241, .18),
+          rgba(99, 102, 241, 0)
+        );
+
+      animation:
+        ambientVioletMove
+        17s
+        ease-in-out
+        infinite;
+    }
+
+    @keyframes ambientBlueMove {
+      0%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate3d(100px, 70px, 0) scale(1.12);
+      }
+    }
+
+    @keyframes ambientVioletMove {
+      0%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate3d(-100px, -60px, 0) scale(1.1);
+      }
+    }
+
+    /* =====================================================
+       PAGE CONTAINER
+    ===================================================== */
+
+    .page-container {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .page-container::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -9;
+      pointer-events: none;
+
+      opacity: .32;
+
+      background-image:
+        linear-gradient(
+          rgba(37, 99, 235, .035) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(37, 99, 235, .035) 1px,
+          transparent 1px
+        );
+
+      background-size: 55px 55px;
+
+      mask-image:
+        linear-gradient(
+          to bottom,
+          black 0%,
+          transparent 85%
+        );
+
+      animation:
+        techGridMove
+        20s
+        linear
+        infinite;
+    }
+
+    @keyframes techGridMove {
+      from {
+        background-position: 0 0;
+      }
+
+      to {
+        background-position: 55px 55px;
+      }
+    }
+
+    /* =====================================================
+       BACK TO HOME BUTTON
+    ===================================================== */
+
+    .back-home-wrapper {
+      width: min(1100px, calc(100% - 40px));
+      margin: 28px auto 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      animation:
+        backHomeEnter
+        .7s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+    }
+
+    .back-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+
+      padding: 10px 16px;
+
+      border: 1px solid rgba(37, 99, 235, .12);
+      border-radius: 12px;
+
+      background: rgba(255, 255, 255, .78);
+
+      color: #475569;
+      text-decoration: none;
+
+      font-size: 14px;
+      font-weight: 600;
+
+      box-shadow:
+        0 8px 25px rgba(15, 23, 42, .05);
+
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+
+      transition:
+        transform .3s ease,
+        color .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease,
+        background .3s ease;
+
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .back-home i {
+      width: 17px;
+      height: 17px;
+
+      flex-shrink: 0;
+
+      transition:
+        transform .3s ease;
+    }
+
+    .back-home:hover {
+      transform: translateX(-4px);
+
+      color: #2563eb;
+
+      border-color:
+        rgba(37, 99, 235, .25);
+
+      background:
+        rgba(255, 255, 255, .95);
+
+      box-shadow:
+        0 12px 35px
+        rgba(37, 99, 235, .10);
+    }
+
+    .back-home:hover i {
+      transform: translateX(-3px);
+    }
+
+    .back-home:active {
+      transform: translateX(-2px) scale(.98);
+    }
+
+    @keyframes backHomeEnter {
+      from {
+        opacity: 0;
+        transform: translateY(-12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =====================================================
+       PAGE HEADER
+    ===================================================== */
+
+    .page-header {
+      animation:
+        headerEnter
+        .9s
+        .1s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+    }
+
+    @keyframes headerEnter {
+      from {
+        opacity: 0;
+        transform:
+          translateY(28px)
+          scale(.98);
+      }
+
+      to {
+        opacity: 1;
+        transform:
+          translateY(0)
+          scale(1);
+      }
+    }
+
+    .page-label {
+      animation:
+        labelPulse
+        3s
+        ease-in-out
+        infinite;
+    }
+
+    @keyframes labelPulse {
+      0%, 100% {
+        box-shadow:
+          0 0 0
+          rgba(37, 99, 235, 0);
+      }
+
+      50% {
+        box-shadow:
+          0 0 28px
+          rgba(37, 99, 235, .08);
+      }
+    }
+
+    .label-dot {
+      animation:
+        labelDotPulse
+        1.8s
+        ease-in-out
+        infinite;
+    }
+
+    @keyframes labelDotPulse {
+      0%, 100% {
+        transform: scale(.7);
+        opacity: .55;
+      }
+
+      50% {
+        transform: scale(1.25);
+        opacity: 1;
+      }
+    }
+
+    /* =====================================================
+       MAIN CARD
+    ===================================================== */
+
+    .translator-card {
+      animation:
+        translatorEnter
+        1s
+        .15s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+    }
+
+    @keyframes translatorEnter {
+      from {
+        opacity: 0;
+        transform:
+          translateY(35px)
+          scale(.985);
+      }
+
+      to {
+        opacity: 1;
+        transform:
+          translateY(0)
+          scale(1);
+      }
+    }
+
+    .section-block {
+      position: relative;
+    }
+
+    .section-block::before {
+      content: "";
+      position: absolute;
+
+      width: 220px;
+      height: 220px;
+
+      top: -100px;
+      right: -100px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(37, 99, 235, .06),
+          transparent 70%
+        );
+
+      pointer-events: none;
+    }
+
+    /* =====================================================
+       WORKFLOW
+    ===================================================== */
+
+    .workflow {
+      position: relative;
+    }
+
+    .workflow-step {
+      transition:
+        transform .4s
+        cubic-bezier(.16, 1, .3, 1),
+        color .3s ease;
+    }
+
+    .workflow-step:hover {
+      transform: translateY(-4px);
+    }
+
+    .workflow-step span {
+      transition:
+        transform .4s ease,
+        box-shadow .4s ease;
+    }
+
+    .workflow-step:hover span {
+      transform: scale(1.1);
+
+      box-shadow:
+        0 8px 25px
+        rgba(37, 99, 235, .18);
+    }
+
+    .workflow-step.active span {
+      animation:
+        workflowPulse
+        2.2s
+        ease-in-out
+        infinite;
+    }
+
+    @keyframes workflowPulse {
+      0%, 100% {
+        box-shadow:
+          0 0 0
+          rgba(37, 99, 235, 0);
+      }
+
+      50% {
+        box-shadow:
+          0 0 25px
+          rgba(37, 99, 235, .28);
+      }
+    }
+
+    .workflow-line {
+      overflow: hidden;
+    }
+
+    .workflow-line::after {
+      content: "";
+      display: block;
+
+      width: 35%;
+      height: 100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          #60a5fa,
+          transparent
+        );
+
+      animation:
+        workflowLine
+        2.8s
+        linear
+        infinite;
+    }
+
+    @keyframes workflowLine {
+      from {
+        transform: translateX(-180%);
+      }
+
+      to {
+        transform: translateX(400%);
+      }
+    }
+
+    /* =====================================================
+       HEADINGS
+    ===================================================== */
+
+    .section-heading {
+      animation:
+        sectionHeadingEnter
+        .7s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+    }
+
+    @keyframes sectionHeadingEnter {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .step-number {
+      transition:
+        color .3s ease,
+        transform .3s ease;
+    }
+
+    .section-block:hover .step-number {
+      color: #2563eb;
+      transform: translateX(3px);
+    }
+
+    /* =====================================================
+       RECORD TAB
+    ===================================================== */
+
+    .input-tabs {
+      position: relative;
+      grid-template-columns: 1fr !important;
+    }
+
+    .input-tab {
+      position: relative;
+      overflow: hidden;
+
+      transition:
+        transform .35s
+        cubic-bezier(.16, 1, .3, 1),
+        box-shadow .35s ease,
+        border-color .35s ease;
+    }
+
+    .input-tab::after {
+      content: "";
+
+      position: absolute;
+      top: 0;
+      left: -120%;
+
+      width: 70%;
+      height: 100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, .42),
+          transparent
+        );
+
+      transform: skewX(-18deg);
+
+      transition: left .7s ease;
+
+      pointer-events: none;
+    }
+
+    .input-tab:hover::after {
+      left: 150%;
+    }
+
+    .input-tab:hover {
+      transform: translateY(-4px);
+
+      box-shadow:
+        0 18px 45px
+        rgba(37, 99, 235, .10);
+    }
+
+    .tab-icon {
+      transition: transform .35s ease;
+    }
+
+    .input-tab:hover .tab-icon {
+      transform:
+        scale(1.08)
+        rotate(-4deg);
+    }
+
+    /* =====================================================
+       RECORD BOX
+    ===================================================== */
+
+    .record-box {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .record-box::before {
+      content: "";
+
+      position: absolute;
+      inset: -2px;
+
+      border-radius: inherit;
+
+      background:
+        linear-gradient(
+          120deg,
+          transparent 20%,
+          rgba(37, 99, 235, .12),
+          transparent 80%
+        );
+
+      transform: translateX(-100%);
+
+      animation:
+        recordShimmer
+        6s
+        ease-in-out
+        infinite;
+
+      pointer-events: none;
+    }
+
+    @keyframes recordShimmer {
+      0% {
+        transform: translateX(-120%);
+      }
+
+      45%, 100% {
+        transform: translateX(120%);
+      }
+    }
+
+    /* =====================================================
+       MIC
+    ===================================================== */
+
+    .main-mic-button {
+      position: relative;
+
+      transition:
+        transform .35s
+        cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .main-mic-button:hover {
+      transform:
+        translateY(-5px)
+        scale(1.03);
+    }
+
+    .main-mic-button:active {
+      transform: scale(.96);
+    }
+
+    .mic-circle {
+      position: relative;
+      z-index: 2;
+
+      transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+    }
+
+    .main-mic-button:hover .mic-circle {
+      transform: scale(1.07);
+
+      box-shadow:
+        0 18px 50px
+        rgba(37, 99, 235, .25);
+    }
+
+    .mic-glow {
+      animation:
+        micGlow
+        2.4s
+        ease-in-out
+        infinite;
+    }
+
+    @keyframes micGlow {
+      0%, 100% {
+        transform: scale(.88);
+        opacity: .25;
+      }
+
+      50% {
+        transform: scale(1.16);
+        opacity: .55;
+      }
+    }
+
+    /* =====================================================
+       RECORD WAVE
+    ===================================================== */
+
+    .record-wave span {
+      transform-origin: center;
+
+      animation:
+        recordBars
+        1s
+        ease-in-out
+        infinite;
+    }
+
+    .record-wave span:nth-child(2) { animation-delay: -.1s; }
+    .record-wave span:nth-child(3) { animation-delay: -.2s; }
+    .record-wave span:nth-child(4) { animation-delay: -.3s; }
+    .record-wave span:nth-child(5) { animation-delay: -.4s; }
+    .record-wave span:nth-child(6) { animation-delay: -.5s; }
+    .record-wave span:nth-child(7) { animation-delay: -.6s; }
+    .record-wave span:nth-child(8) { animation-delay: -.7s; }
+    .record-wave span:nth-child(9) { animation-delay: -.8s; }
+    .record-wave span:nth-child(10) { animation-delay: -.9s; }
+    .record-wave span:nth-child(11) { animation-delay: -.3s; }
+    .record-wave span:nth-child(12) { animation-delay: -.6s; }
+    .record-wave span:nth-child(13) { animation-delay: -.2s; }
+    .record-wave span:nth-child(14) { animation-delay: -.5s; }
+    .record-wave span:nth-child(15) { animation-delay: -.8s; }
+    .record-wave span:nth-child(16) { animation-delay: -.4s; }
+    .record-wave span:nth-child(17) { animation-delay: -.7s; }
+    .record-wave span:nth-child(18) { animation-delay: -.2s; }
+    .record-wave span:nth-child(19) { animation-delay: -.6s; }
+    .record-wave span:nth-child(20) { animation-delay: -.3s; }
+
+    @keyframes recordBars {
+      0%, 100% {
+        transform: scaleY(.55);
+        opacity: .4;
+      }
+
+      50% {
+        transform: scaleY(1.15);
+        opacity: 1;
+      }
+    }
+
+    /* =====================================================
+       AUDIO RESULT
+    ===================================================== */
+
+    .audio-result {
+      animation:
+        audioResultEnter
+        .6s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+    }
+
+    @keyframes audioResultEnter {
+      from {
+        opacity: 0;
+        transform:
+          translateY(15px)
+          scale(.98);
+      }
+
+      to {
+        opacity: 1;
+        transform:
+          translateY(0)
+          scale(1);
+      }
+    }
+
+    .audio-result-header {
+      transition: transform .3s ease;
+    }
+
+    .audio-result:hover .audio-result-header {
+      transform: translateX(3px);
+    }
+
+    .audio-icon {
+      transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+    }
+
+    .audio-result:hover .audio-icon {
+      transform: scale(1.08);
+    }
+
+    audio {
+      transition:
+        filter .3s ease,
+        transform .3s ease;
+    }
+
+    audio:hover {
+      transform: translateY(-2px);
+    }
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+
+    .secondary-button,
+    .primary-small,
+    .control-button,
+    .stop-button {
+      transition:
+        transform .3s
+        cubic-bezier(.16, 1, .3, 1),
+        box-shadow .3s ease;
+    }
+
+    .secondary-button:hover,
+    .primary-small:hover,
+    .control-button:hover,
+    .stop-button:hover {
+      transform: translateY(-3px);
+    }
+
+    .icon-button {
+      transition:
+        transform .3s ease,
+        color .3s ease,
+        background .3s ease;
+    }
+
+    .icon-button:hover {
+      transform:
+        rotate(7deg)
+        scale(1.05);
+    }
+
+    /* =====================================================
+       LANGUAGE SELECTOR
+    ===================================================== */
+
+    .language-selector-grid {
+      display: grid !important;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        64px
+        minmax(0, 1fr);
+
+      align-items: center;
+      gap: 22px;
+
+      width: 100%;
+    }
+
+    .language-card {
+      min-width: 0;
+
+      transition:
+        transform .4s
+        cubic-bezier(.16, 1, .3, 1),
+        box-shadow .4s ease;
+    }
+
+    .language-card:hover {
+      transform: translateY(-6px);
+
+      box-shadow:
+        0 25px 65px
+        rgba(37, 99, 235, .10);
+    }
+
+    .language-select {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .language-select::after {
+      content: "";
+
+      position: absolute;
+      top: 0;
+      left: -110%;
+
+      width: 65%;
+      height: 100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, .45),
+          transparent
+        );
+
+      transform: skewX(-18deg);
+
+      transition: left .7s ease;
+
+      pointer-events: none;
+    }
+
+    .language-select:hover::after {
+      left: 145%;
+    }
+
+    .language-symbol {
+      transition: transform .35s ease;
+    }
+
+    .language-select:hover .language-symbol {
+      transform: scale(1.08);
+    }
+
+    /* =====================================================
+       SWAP
+    ===================================================== */
+
+    .language-swap {
+      flex-shrink: 0;
+      justify-self: center;
+
+      transition:
+        transform .45s
+        cubic-bezier(.16, 1, .3, 1),
+        box-shadow .35s ease;
+    }
+
+    .language-swap:hover {
+      transform:
+        rotate(180deg)
+        scale(1.08);
+
+      box-shadow:
+        0 12px 35px
+        rgba(37, 99, 235, .18);
+    }
+
+    /* =====================================================
+       LANGUAGE MENU
+    ===================================================== */
+
+    .language-menu {
+      animation:
+        menuEnter
+        .3s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+
+      transform-origin: top center;
+
+      max-height: 330px;
+      overflow-y: auto;
+    }
+
+    @keyframes menuEnter {
+      from {
+        opacity: 0;
+        transform:
+          translateY(-8px)
+          scale(.97);
+      }
+
+      to {
+        opacity: 1;
+        transform:
+          translateY(0)
+          scale(1);
+      }
+    }
+
+    .language-menu button {
+      transition:
+        transform .25s ease,
+        background .25s ease,
+        padding-left .25s ease;
+    }
+
+    .language-menu button:hover {
+      transform: translateX(4px);
+    }
+
+    .language-menu button.selected {
+      color: #2563eb;
+      background: rgba(37, 99, 235, .07);
+    }
+
+    /* =====================================================
+       TRANSLATE BUTTON
+    ===================================================== */
+
+    .translate-section {
+      position: relative;
+    }
+
+    .translate-button {
+      position: relative;
+      overflow: hidden;
+
+      transition:
+        transform .4s
+        cubic-bezier(.16, 1, .3, 1),
+        box-shadow .4s ease;
+    }
+
+    .translate-button::before {
+      content: "";
+
+      position: absolute;
+      top: 0;
+      left: -120%;
+
+      width: 60%;
+      height: 100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, .30),
+          transparent
+        );
+
+      transform: skewX(-20deg);
+
+      animation:
+        translateShine
+        4s
+        ease-in-out
+        infinite;
+    }
+
+    @keyframes translateShine {
+      0%, 45% {
+        left: -120%;
+      }
+
+      70%, 100% {
+        left: 150%;
+      }
+    }
+
+    .translate-button:not(:disabled):hover {
+      transform: translateY(-5px);
+
+      box-shadow:
+        0 22px 55px
+        rgba(37, 99, 235, .20);
+    }
+
+    .translate-button-icon {
+      transition: transform .45s ease;
+    }
+
+    .translate-button:not(:disabled):hover
+    .translate-button-icon {
+      transform:
+        rotate(8deg)
+        scale(1.08);
+    }
+
+    .translate-arrow {
+      transition: transform .35s ease;
+    }
+
+    .translate-button:not(:disabled):hover
+    .translate-arrow {
+      transform:
+        translate(3px, -3px);
+    }
+
+    /* =====================================================
+       PROCESSING
+    ===================================================== */
+
+    .processing-section {
+      animation:
+        processingEnter
+        .6s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+    }
+
+    @keyframes processingEnter {
+      from {
+        opacity: 0;
+        transform:
+          translateY(18px)
+          scale(.985);
+      }
+
+      to {
+        opacity: 1;
+        transform:
+          translateY(0)
+          scale(1);
+      }
+    }
+
+    .processing-ring {
+      animation:
+        processingRing
+        2.2s
+        linear
+        infinite;
+    }
+
+    @keyframes processingRing {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .processing-icon i {
+      animation:
+        processingIconPulse
+        1.8s
+        ease-in-out
+        infinite;
+    }
+
+    @keyframes processingIconPulse {
+      0%, 100% {
+        transform: scale(.92);
+      }
+
+      50% {
+        transform: scale(1.08);
+      }
+    }
+
+    .processing-step {
+      position: relative;
+
+      transition:
+        transform .3s ease,
+        color .3s ease;
+    }
+
+    .processing-step:hover {
+      transform: translateX(5px);
+    }
+
+    .processing-step.active .step-state {
+      animation:
+        activeProcessing
+        1.2s
+        ease-in-out
+        infinite;
+    }
+
+    @keyframes activeProcessing {
+      0%, 100% {
+        box-shadow:
+          0 0 0
+          rgba(37, 99, 235, 0);
+
+        transform: scale(.82);
+      }
+
+      50% {
+        box-shadow:
+          0 0 18px
+          rgba(37, 99, 235, .35);
+
+        transform: scale(1.12);
+      }
+    }
+
+    .processing-step.completed .step-state {
+      position: relative;
+
+      animation:
+        processingTickGlow
+        .7s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+    }
+
+    .processing-step.completed .step-state i {
+      animation:
+        processingTickAppear
+        .45s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+    }
+
+    @keyframes processingTickAppear {
+      0% {
+        opacity: 0;
+        transform:
+          scale(.45)
+          rotate(-12deg);
+      }
+
+      65% {
+        opacity: 1;
+        transform:
+          scale(1.16)
+          rotate(3deg);
+      }
+
+      100% {
+        opacity: 1;
+        transform:
+          scale(1)
+          rotate(0deg);
+      }
+    }
+
+    @keyframes processingTickGlow {
+      0% {
+        box-shadow:
+          0 0 0
+          rgba(37, 99, 235, 0);
+      }
+
+      35% {
+        box-shadow:
+          0 0 20px
+          rgba(37, 99, 235, .42);
+      }
+
+      100% {
+        box-shadow:
+          0 0 7px
+          rgba(37, 99, 235, .16);
+      }
+    }
+
+    .processing-step.completed .step-state::after {
+      content: "";
+
+      position: absolute;
+      inset: -7px;
+
+      border-radius: 50%;
+
+      border:
+        1px solid
+        rgba(96, 165, 250, .38);
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      animation:
+        processingTickBurst
+        .65s
+        ease-out
+        both;
+    }
+
+    @keyframes processingTickBurst {
+      0% {
+        opacity: .8;
+        transform: scale(.7);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.55);
+      }
+    }
+
+    /* =====================================================
+       RESULT
+    ===================================================== */
+
+    .translation-result {
+      animation:
+        resultEnter
+        .8s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+    }
+
+    @keyframes resultEnter {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .translation-card {
+      position: relative;
+      overflow: hidden;
+
+      transition:
+        transform .4s
+        cubic-bezier(.16, 1, .3, 1),
+        box-shadow .4s ease,
+        border-color .4s ease;
+    }
+
+    .translation-card::before {
+      content: "";
+
+      position: absolute;
+      top: 0;
+      left: -110%;
+
+      width: 60%;
+      height: 100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, .25),
+          transparent
+        );
+
+      transform: skewX(-18deg);
+
+      transition: left .8s ease;
+
+      pointer-events: none;
+    }
+
+    .translation-card:hover::before {
+      left: 150%;
+    }
+
+    .translation-card:hover {
+      transform: translateY(-7px);
+
+      box-shadow:
+        0 28px 75px
+        rgba(37, 99, 235, .10);
+    }
+
+    .language-pill {
+      transition: transform .3s ease;
+    }
+
+    .translation-card:hover
+    .language-pill {
+      transform:
+        translateY(-2px)
+        scale(1.04);
+    }
+
+    .play-result {
+      transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+    }
+
+    .play-result:hover {
+      transform: scale(1.08);
+
+      box-shadow:
+        0 10px 30px
+        rgba(37, 99, 235, .18);
+    }
+
+    /* =====================================================
+       RESULT WAVE
+    ===================================================== */
+
+    .result-wave span {
+      animation:
+        resultBars
+        1.1s
+        ease-in-out
+        infinite;
+
+      transform-origin: center;
+    }
+
+    .result-wave span:nth-child(2) { animation-delay: -.1s; }
+    .result-wave span:nth-child(3) { animation-delay: -.2s; }
+    .result-wave span:nth-child(4) { animation-delay: -.3s; }
+    .result-wave span:nth-child(5) { animation-delay: -.4s; }
+    .result-wave span:nth-child(6) { animation-delay: -.5s; }
+    .result-wave span:nth-child(7) { animation-delay: -.6s; }
+    .result-wave span:nth-child(8) { animation-delay: -.7s; }
+    .result-wave span:nth-child(9) { animation-delay: -.8s; }
+    .result-wave span:nth-child(10) { animation-delay: -.9s; }
+    .result-wave span:nth-child(11) { animation-delay: -.3s; }
+    .result-wave span:nth-child(12) { animation-delay: -.6s; }
+
+    @keyframes resultBars {
+      0%, 100% {
+        transform: scaleY(.5);
+        opacity: .4;
+      }
+
+      50% {
+        transform: scaleY(1.12);
+        opacity: 1;
+      }
+    }
+
+    /* =====================================================
+       LISTEN
+    ===================================================== */
+
+    .listen-button {
+      transition:
+        transform .35s
+        cubic-bezier(.16, 1, .3, 1),
+        box-shadow .35s ease;
+    }
+
+    .listen-button:hover {
+      transform: translateY(-4px);
+
+      box-shadow:
+        0 18px 45px
+        rgba(37, 99, 235, .14);
+    }
+
+    .listen-button i {
+      transition: transform .35s ease;
+    }
+
+    .listen-button:hover i {
+      transform: scale(1.12);
+    }
+
+    /* =====================================================
+       TIP
+    ===================================================== */
+
+    .tip-box {
+      animation:
+        tipEnter
+        .8s
+        .2s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+
+      transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+    }
+
+    @keyframes tipEnter {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tip-box:hover {
+      transform: translateY(-4px);
+
+      box-shadow:
+        0 20px 55px
+        rgba(37, 99, 235, .08);
+    }
+
+    .tip-icon {
+      animation:
+        tipPulse
+        2.8s
+        ease-in-out
+        infinite;
+    }
+
+    @keyframes tipPulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform:
+          scale(1.08)
+          rotate(-4deg);
+      }
+    }
+
+    /* =====================================================
+       RECENT
+    ===================================================== */
+
+    .recent-section {
+      animation:
+        recentEnter
+        .9s
+        .3s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+    }
+
+    @keyframes recentEnter {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .recent-item {
+      position: relative;
+      overflow: hidden;
+
+      transition:
+        transform .35s
+        cubic-bezier(.16, 1, .3, 1),
+        box-shadow .35s ease,
+        border-color .35s ease;
+    }
+
+    .recent-item::after {
+      content: "";
+
+      position: absolute;
+      top: 0;
+      left: -120%;
+
+      width: 60%;
+      height: 100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, .28),
+          transparent
+        );
+
+      transform: skewX(-18deg);
+
+      transition: left .7s ease;
+
+      pointer-events: none;
+    }
+
+    .recent-item:hover::after {
+      left: 150%;
+    }
+
+    .recent-item:hover {
+      transform: translateX(5px);
+
+      box-shadow:
+        0 18px 50px
+        rgba(37, 99, 235, .08);
+    }
+
+    .recent-language span {
+      transition: transform .3s ease;
+    }
+
+    .recent-item:hover
+    .recent-language span {
+      transform: scale(1.06);
+    }
+
+    .recent-play {
+      transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+    }
+
+    .recent-play:hover {
+      transform: scale(1.08);
+
+      box-shadow:
+        0 10px 25px
+        rgba(37, 99, 235, .16);
+    }
+
+    .recent-loading,
+    .recent-empty,
+    .recent-error {
+      padding: 22px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .recent-loading,
+    .recent-empty {
+      opacity: .65;
+    }
+
+    .recent-error {
+      opacity: .7;
+    }
+
+    .recent-item.recent-item-enter {
+      animation:
+        recentItemEnter
+        .45s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+    }
+
+    @keyframes recentItemEnter {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media (max-width: 900px) {
+
+      .ambient-blue {
+        width: 300px;
+        height: 300px;
+      }
+
+      .ambient-violet {
+        width: 300px;
+        height: 300px;
+      }
+
+      .back-home-wrapper {
+        width: min(100% - 32px, 1100px);
+        margin-top: 20px;
+      }
+
+      .language-selector-grid {
+        grid-template-columns:
+          minmax(0, 1fr)
+          52px
+          minmax(0, 1fr);
+
+        gap: 14px;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .ambient {
+        filter: blur(70px);
+        opacity: .25;
+      }
+
+      .page-container::before {
+        background-size: 42px 42px;
+      }
+
+      .back-home-wrapper {
+        width: calc(100% - 32px);
+        margin-top: 16px;
+      }
+
+      .back-home {
+        padding: 9px 13px;
+        font-size: 13px;
+      }
+
+      .back-home i {
+        width: 16px;
+        height: 16px;
+      }
+
+      .page-header {
+        animation-duration: .7s;
+      }
+
+      .translator-card {
+        animation-duration: .8s;
+      }
+
+      .workflow-step:hover {
+        transform: none;
+      }
+
+      .language-selector-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .language-swap {
+        order: 2;
+        transform: rotate(90deg);
+      }
+
+      .language-swap:hover {
+        transform:
+          rotate(270deg)
+          scale(1.06);
+      }
+
+      .language-card:first-child {
+        order: 1;
+      }
+
+      .language-card:last-child {
+        order: 3;
+      }
+
+      .language-card:hover {
+        transform: translateY(-3px);
+      }
+
+      .translation-card:hover {
+        transform: translateY(-4px);
+      }
+
+      .recent-item:hover {
+        transform: translateX(2px);
+      }
+
+      .main-mic-button:hover {
+        transform: scale(1.02);
+      }
+
+      .translate-button:not(:disabled):hover {
+        transform: translateY(-3px);
+      }
+    }
+
+    /* =====================================================
+       ACCESSIBILITY
+    ===================================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+  </style>
 </head>
 
 <body>
 
-  <!-- Background -->
+  <!-- =====================================================
+       AMBIENT BACKGROUND
+  ===================================================== -->
+
   <div class="ambient ambient-blue"></div>
   <div class="ambient ambient-violet"></div>
 
 
-  <!-- =========================
-       NAVBAR
-  ========================== -->
+  <!-- =====================================================
+       BACK TO HOME
+       TOP LEFT BUTTON
+  ===================================================== -->
 
-  <header class="navbar">
+  <div class="back-home-wrapper">
 
-    <a href="/" class="brand">
-      <span class="brand-icon">
-        <i data-lucide="waves"></i>
+    <a
+      href="/"
+      id="backHomeButton"
+      class="back-home"
+      aria-label="Go back to VoiceBridge home"
+    >
+
+      <i data-lucide="arrow-left"></i>
+
+      <span>
+        Back to Home
       </span>
 
-      <span>VoiceBridge</span>
     </a>
 
-    <a href="/" class="back-home">
-      <i data-lucide="arrow-left"></i>
-      <span>Home</span>
-    </a>
-
-  </header>
+  </div>
 
 
-  <!-- =========================
-       MAIN
-  ========================== -->
+  <!-- =====================================================
+       MAIN PAGE
+  ===================================================== -->
 
   <main class="page-container">
 
-    <!-- Header -->
+    <!-- HEADER -->
 
     <section class="page-header">
 
@@ -53,24 +1780,25 @@
         VOICE TRANSLATION
       </span>
 
-      <h1>Translate Voice</h1>
+      <h1>
+        Translate Voice
+      </h1>
 
       <p>
-        Record a voice message or upload an audio file,
-        choose your languages, and get the translated voice.
+        Record a voice message, choose your languages,
+        and get the translated voice.
       </p>
 
     </section>
 
 
-    <!-- =========================
+    <!-- ===================================================
          MAIN TRANSLATOR
-    ========================== -->
+    =================================================== -->
 
     <section class="translator-card">
 
-
-      <!-- Workflow -->
+      <!-- WORKFLOW -->
 
       <div class="workflow">
 
@@ -103,27 +1831,32 @@
       </div>
 
 
-      <!-- =========================
+      <!-- =================================================
            ADD VOICE
-      ========================== -->
+      ================================================= -->
 
       <section class="section-block">
 
         <div class="section-heading">
 
           <div>
-            <span class="step-number">01</span>
-            <h2>Add Your Voice</h2>
+
+            <span class="step-number">
+              01
+            </span>
+
+            <h2>
+              Add Your Voice
+            </h2>
+
           </div>
 
           <p>
-            Record a new message or use an existing audio file.
+            Record a new voice message directly from your browser.
           </p>
 
         </div>
 
-
-        <!-- Tabs -->
 
         <div class="input-tabs">
 
@@ -138,26 +1871,15 @@
             </span>
 
             <span>
-              <strong>Record Voice</strong>
-              <small>Record directly from your browser</small>
-            </span>
 
-          </button>
+              <strong>
+                Record Voice
+              </strong>
 
+              <small>
+                Record directly from your browser
+              </small>
 
-          <button
-            class="input-tab"
-            id="uploadTab"
-            type="button"
-          >
-
-            <span class="tab-icon">
-              <i data-lucide="folder-up"></i>
-            </span>
-
-            <span>
-              <strong>Upload Audio</strong>
-              <small>Use an existing voice message</small>
             </span>
 
           </button>
@@ -165,16 +1887,15 @@
         </div>
 
 
-        <!-- =========================
-             RECORD PANEL
-        ========================== -->
-
         <div
           class="input-panel active"
           id="recordPanel"
         >
 
-          <div class="record-box" id="recordBox">
+          <div
+            class="record-box"
+            id="recordBox"
+          >
 
             <div class="record-status">
 
@@ -187,12 +1908,11 @@
             </div>
 
 
-            <!-- Microphone -->
-
             <button
               class="main-mic-button"
               id="mainMicButton"
               type="button"
+              aria-label="Start recording"
             >
 
               <span class="mic-glow"></span>
@@ -204,8 +1924,6 @@
             </button>
 
 
-            <!-- Timer -->
-
             <div
               class="record-timer"
               id="recordTimer"
@@ -213,8 +1931,6 @@
               00:00
             </div>
 
-
-            <!-- Waveform -->
 
             <div
               class="record-wave"
@@ -241,12 +1957,9 @@
               <span></span>
               <span></span>
               <span></span>
-              <span></span>
 
             </div>
 
-
-            <!-- Recording controls -->
 
             <div
               class="record-controls"
@@ -258,17 +1971,24 @@
                 id="pauseButton"
                 type="button"
               >
+
                 <i data-lucide="pause"></i>
+
                 Pause
+
               </button>
+
 
               <button
                 class="stop-button"
                 id="stopButton"
                 type="button"
               >
+
                 <span></span>
+
                 Stop
+
               </button>
 
             </div>
@@ -281,7 +2001,7 @@
           </div>
 
 
-          <!-- Recorded Audio -->
+          <!-- RECORDED AUDIO -->
 
           <div
             class="audio-result"
@@ -297,11 +2017,19 @@
                 </span>
 
                 <div>
-                  <strong>Recorded Voice</strong>
-                  <small id="recordedDuration">00:00</small>
+
+                  <strong>
+                    Recorded Voice
+                  </strong>
+
+                  <small id="recordedDuration">
+                    00:00
+                  </small>
+
                 </div>
 
               </div>
+
 
               <button
                 class="icon-button"
@@ -309,7 +2037,9 @@
                 type="button"
                 aria-label="Delete recording"
               >
+
                 <i data-lucide="trash-2"></i>
+
               </button>
 
             </div>
@@ -328,112 +2058,27 @@
                 id="recordAgain"
                 type="button"
               >
+
                 <i data-lucide="rotate-ccw"></i>
+
                 Record Again
+
               </button>
+
 
               <button
                 class="primary-small"
                 id="useRecording"
                 type="button"
               >
+
                 Use This Recording
+
                 <i data-lucide="arrow-right"></i>
+
               </button>
 
             </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- =========================
-             UPLOAD PANEL
-        ========================== -->
-
-        <div
-          class="input-panel"
-          id="uploadPanel"
-        >
-
-          <label
-            class="drop-zone"
-            id="dropZone"
-            for="audioInput"
-          >
-
-            <input
-              type="file"
-              id="audioInput"
-              accept="audio/*"
-              hidden
-            />
-
-            <div class="drop-icon">
-              <i data-lucide="upload-cloud"></i>
-            </div>
-
-            <h3>Drop your audio here</h3>
-
-            <p>
-              or
-              <span>Browse Files</span>
-            </p>
-
-            <small>
-              MP3, WAV, M4A and WebM supported
-            </small>
-
-          </label>
-
-
-          <!-- Uploaded Audio -->
-
-          <div
-            class="audio-result"
-            id="uploadedAudioResult"
-          >
-
-            <div class="audio-result-header">
-
-              <div class="audio-result-title">
-
-                <span class="audio-icon">
-                  <i data-lucide="file-audio"></i>
-                </span>
-
-                <div>
-
-                  <strong id="uploadedFileName">
-                    voice-message
-                  </strong>
-
-                  <small id="uploadedFileInfo">
-                    0 KB · 00:00
-                  </small>
-
-                </div>
-
-              </div>
-
-
-              <button
-                class="icon-button"
-                id="removeUpload"
-                type="button"
-                aria-label="Remove audio"
-              >
-                <i data-lucide="trash-2"></i>
-              </button>
-
-            </div>
-
-
-            <audio
-              id="uploadedAudio"
-              controls
-            ></audio>
 
           </div>
 
@@ -442,9 +2087,9 @@
       </section>
 
 
-      <!-- =========================
+      <!-- =================================================
            LANGUAGE SELECTION
-      ========================== -->
+      ================================================= -->
 
       <section
         class="section-block language-section"
@@ -454,8 +2099,15 @@
         <div class="section-heading">
 
           <div>
-            <span class="step-number">02</span>
-            <h2>Choose Languages</h2>
+
+            <span class="step-number">
+              02
+            </span>
+
+            <h2>
+              Choose Languages
+            </h2>
+
           </div>
 
           <p>
@@ -467,27 +2119,41 @@
 
         <div class="language-selector-grid">
 
-          <!-- Source -->
+          <!-- SOURCE -->
 
           <div class="language-card">
 
-            <label>Your Voice</label>
+            <label>
+              Your Voice
+            </label>
 
             <button
               class="language-select"
               id="sourceLanguage"
               type="button"
+              aria-haspopup="listbox"
+              aria-expanded="false"
             >
 
               <span class="language-content">
 
-                <span class="language-symbol">
-                  IN
+                <span
+                  class="language-symbol"
+                  id="sourceLanguageCode"
+                >
+                  ML
                 </span>
 
                 <span>
-                  <strong>Malayalam</strong>
-                  <small>Source language</small>
+
+                  <strong id="sourceLanguageName">
+                    Malayalam
+                  </strong>
+
+                  <small>
+                    Source language
+                  </small>
+
                 </span>
 
               </span>
@@ -499,7 +2165,7 @@
           </div>
 
 
-          <!-- Swap -->
+          <!-- SWAP -->
 
           <button
             class="language-swap"
@@ -507,31 +2173,47 @@
             type="button"
             aria-label="Swap languages"
           >
+
             <i data-lucide="arrow-right-left"></i>
+
           </button>
 
 
-          <!-- Target -->
+          <!-- TARGET -->
 
           <div class="language-card">
 
-            <label>Translate To</label>
+            <label>
+              Translate To
+            </label>
 
             <button
               class="language-select"
               id="targetLanguage"
               type="button"
+              aria-haspopup="listbox"
+              aria-expanded="false"
             >
 
               <span class="language-content">
 
-                <span class="language-symbol">
+                <span
+                  class="language-symbol"
+                  id="targetLanguageCode"
+                >
                   EN
                 </span>
 
                 <span>
-                  <strong>English</strong>
-                  <small>Target language</small>
+
+                  <strong id="targetLanguageName">
+                    English
+                  </strong>
+
+                  <small>
+                    Target language
+                  </small>
+
                 </span>
 
               </span>
@@ -545,51 +2227,202 @@
         </div>
 
 
-        <!-- Language Menu -->
+        <!-- LANGUAGE MENU -->
 
         <div
           class="language-menu"
           id="languageMenu"
+          hidden
+          role="listbox"
         >
 
-          <button data-language="Malayalam">
+          <button
+            type="button"
+            data-language="Malayalam"
+            data-code="ML"
+          >
             <span class="language-code">ML</span>
             Malayalam
           </button>
 
-          <button data-language="English">
+          <button
+            type="button"
+            data-language="English"
+            data-code="EN"
+          >
             <span class="language-code">EN</span>
             English
           </button>
 
-          <button data-language="Tamil">
+          <button
+            type="button"
+            data-language="Tamil"
+            data-code="TA"
+          >
             <span class="language-code">TA</span>
             Tamil
           </button>
 
-          <button data-language="Hindi">
+          <button
+            type="button"
+            data-language="Hindi"
+            data-code="HI"
+          >
             <span class="language-code">HI</span>
             Hindi
           </button>
 
-          <button data-language="Kannada">
+          <button
+            type="button"
+            data-language="Kannada"
+            data-code="KN"
+          >
             <span class="language-code">KN</span>
             Kannada
           </button>
 
-          <button data-language="Telugu">
+          <button
+            type="button"
+            data-language="Telugu"
+            data-code="TE"
+          >
             <span class="language-code">TE</span>
             Telugu
           </button>
 
-          <button data-language="Arabic">
+          <button
+            type="button"
+            data-language="Bengali"
+            data-code="BN"
+          >
+            <span class="language-code">BN</span>
+            Bengali
+          </button>
+
+          <button
+            type="button"
+            data-language="Marathi"
+            data-code="MR"
+          >
+            <span class="language-code">MR</span>
+            Marathi
+          </button>
+
+          <button
+            type="button"
+            data-language="Gujarati"
+            data-code="GU"
+          >
+            <span class="language-code">GU</span>
+            Gujarati
+          </button>
+
+          <button
+            type="button"
+            data-language="Punjabi"
+            data-code="PA"
+          >
+            <span class="language-code">PA</span>
+            Punjabi
+          </button>
+
+          <button
+            type="button"
+            data-language="Urdu"
+            data-code="UR"
+          >
+            <span class="language-code">UR</span>
+            Urdu
+          </button>
+
+          <button
+            type="button"
+            data-language="Arabic"
+            data-code="AR"
+          >
             <span class="language-code">AR</span>
             Arabic
           </button>
 
-          <button data-language="Urdu">
-            <span class="language-code">UR</span>
-            Urdu
+          <button
+            type="button"
+            data-language="Spanish"
+            data-code="ES"
+          >
+            <span class="language-code">ES</span>
+            Spanish
+          </button>
+
+          <button
+            type="button"
+            data-language="French"
+            data-code="FR"
+          >
+            <span class="language-code">FR</span>
+            French
+          </button>
+
+          <button
+            type="button"
+            data-language="German"
+            data-code="DE"
+          >
+            <span class="language-code">DE</span>
+            German
+          </button>
+
+          <button
+            type="button"
+            data-language="Portuguese"
+            data-code="PT"
+          >
+            <span class="language-code">PT</span>
+            Portuguese
+          </button>
+
+          <button
+            type="button"
+            data-language="Italian"
+            data-code="IT"
+          >
+            <span class="language-code">IT</span>
+            Italian
+          </button>
+
+          <button
+            type="button"
+            data-language="Russian"
+            data-code="RU"
+          >
+            <span class="language-code">RU</span>
+            Russian
+          </button>
+
+          <button
+            type="button"
+            data-language="Chinese"
+            data-code="ZH"
+          >
+            <span class="language-code">ZH</span>
+            Chinese
+          </button>
+
+          <button
+            type="button"
+            data-language="Japanese"
+            data-code="JA"
+          >
+            <span class="language-code">JA</span>
+            Japanese
+          </button>
+
+          <button
+            type="button"
+            data-language="Korean"
+            data-code="KO"
+          >
+            <span class="language-code">KO</span>
+            Korean
           </button>
 
         </div>
@@ -597,14 +2430,13 @@
       </section>
 
 
-      <!-- =========================
+      <!-- =================================================
            TRANSLATE
-      ========================== -->
+      ================================================= -->
 
       <section class="translate-section">
 
         <div class="translate-divider"></div>
-
 
         <button
           class="translate-button"
@@ -618,8 +2450,15 @@
           </span>
 
           <span>
-            <strong>Translate Voice</strong>
-            <small>Convert your voice into another language</small>
+
+            <strong>
+              Translate Voice
+            </strong>
+
+            <small>
+              Convert your voice into another language
+            </small>
+
           </span>
 
           <i
@@ -636,54 +2475,42 @@
       </section>
 
 
-      <!-- =========================
+      <!-- =================================================
            PROCESSING
-      ========================== -->
+      ================================================= -->
 
       <section
         class="processing-section"
         id="processingSection"
+        hidden
       >
 
         <div class="processing-icon">
+
           <div class="processing-ring"></div>
+
           <i data-lucide="languages"></i>
+
         </div>
 
-        <h2>Translating your voice</h2>
+        <h2>
+          Translating your voice
+        </h2>
 
-        <p>This may take a few seconds.</p>
+        <p>
+          This may take a few seconds.
+        </p>
 
 
         <div class="processing-steps">
 
-          <div class="processing-step completed">
-
-            <span class="step-state">
-              <i data-lucide="check"></i>
-            </span>
-
-            <span>Audio received</span>
-
-          </div>
-
-
-          <div class="processing-step completed">
-
-            <span class="step-state">
-              <i data-lucide="check"></i>
-            </span>
-
-            <span>Speech detected</span>
-
-          </div>
-
-
-          <div class="processing-step active">
+          <div class="processing-step">
 
             <span class="step-state"></span>
 
-            <span>Translating</span>
+            <span>
+              Audio received
+            </span>
 
           </div>
 
@@ -692,7 +2519,31 @@
 
             <span class="step-state"></span>
 
-            <span>Generating voice</span>
+            <span>
+              Speech detected
+            </span>
+
+          </div>
+
+
+          <div class="processing-step">
+
+            <span class="step-state"></span>
+
+            <span>
+              Translating
+            </span>
+
+          </div>
+
+
+          <div class="processing-step">
+
+            <span class="step-state"></span>
+
+            <span>
+              Generating voice
+            </span>
 
           </div>
 
@@ -701,44 +2552,60 @@
       </section>
 
 
-      <!-- =========================
+      <!-- =================================================
            RESULT
-      ========================== -->
+      ================================================= -->
 
       <section
         class="translation-result"
         id="translationResult"
+        hidden
       >
 
         <div class="result-heading">
 
-          <span class="step-number">04</span>
+          <span class="step-number">
+            04
+          </span>
 
           <div>
-            <h2>Your Translation</h2>
-            <p>Your translated voice is ready.</p>
+
+            <h2>
+              Your Translation
+            </h2>
+
+            <p>
+              Your translated voice is ready.
+            </p>
+
           </div>
 
         </div>
 
 
-        <!-- Original -->
-
         <div class="translation-card">
 
           <div class="translation-card-top">
 
-            <span>ORIGINAL VOICE</span>
+            <span>
+              ORIGINAL VOICE
+            </span>
 
-            <span class="language-pill">
+            <span
+              class="language-pill"
+              id="resultSourceLanguage"
+            >
               Malayalam
             </span>
 
           </div>
 
 
-          <p class="transcript">
-            "നാളെ എനിക്ക് കോഴിക്കോട് പോകണം."
+          <p
+            class="transcript"
+            id="originalTranscript"
+          >
+            Your recorded voice will appear here.
           </p>
 
 
@@ -746,10 +2613,15 @@
 
             <button
               class="play-result"
+              id="playOriginal"
               type="button"
+              aria-label="Play original voice"
             >
+
               <i data-lucide="play"></i>
+
             </button>
+
 
             <div class="result-wave">
 
@@ -768,30 +2640,39 @@
 
             </div>
 
-            <span>00:08</span>
+
+            <span id="originalDuration">
+              00:00
+            </span>
 
           </div>
 
         </div>
 
 
-        <!-- Translated -->
-
         <div class="translation-card translated">
 
           <div class="translation-card-top">
 
-            <span>TRANSLATED VOICE</span>
+            <span>
+              TRANSLATED VOICE
+            </span>
 
-            <span class="language-pill blue">
+            <span
+              class="language-pill blue"
+              id="resultTargetLanguage"
+            >
               English
             </span>
 
           </div>
 
 
-          <p class="transcript">
-            "I need to go to Kozhikode tomorrow."
+          <p
+            class="transcript"
+            id="translatedTranscript"
+          >
+            Your translated text will appear here.
           </p>
 
 
@@ -799,10 +2680,15 @@
 
             <button
               class="play-result"
+              id="playTranslated"
               type="button"
+              aria-label="Play translated voice"
             >
+
               <i data-lucide="play"></i>
+
             </button>
+
 
             <div class="result-wave">
 
@@ -821,7 +2707,10 @@
 
             </div>
 
-            <span>00:08</span>
+
+            <span id="translatedDuration">
+              00:00
+            </span>
 
           </div>
 
@@ -830,6 +2719,7 @@
 
         <button
           class="listen-button"
+          id="listenTranslation"
           type="button"
         >
 
@@ -841,13 +2731,12 @@
 
       </section>
 
-
     </section>
 
 
-    <!-- =========================
+    <!-- ===================================================
          TIP
-    ========================== -->
+    =================================================== -->
 
     <div class="tip-box">
 
@@ -856,94 +2745,51 @@
       </span>
 
       <div>
-        <strong>Tip</strong>
+
+        <strong>
+          Tip
+        </strong>
 
         <p>
           For better translation accuracy, record clear speech
           with minimal background noise.
         </p>
+
       </div>
 
     </div>
 
 
-    <!-- =========================
+    <!-- ===================================================
          RECENT
-    ========================== -->
+    =================================================== -->
 
     <section class="recent-section">
 
       <div class="recent-header">
 
         <div>
+
           <span class="section-mini-label">
             YOUR ACTIVITY
           </span>
 
-          <h2>Recent Translations</h2>
-        </div>
+          <h2>
+            Recent Translations
+          </h2>
 
-        <button class="view-all">
-          View All
-          <i data-lucide="arrow-up-right"></i>
-        </button>
+        </div>
 
       </div>
 
 
-      <div class="recent-list">
+      <div
+        class="recent-list"
+        id="recentTranslationsList"
+      >
 
-        <div class="recent-item">
-
-          <div class="recent-language">
-            <span>ML</span>
-            <i data-lucide="arrow-right"></i>
-            <span>EN</span>
-          </div>
-
-          <div class="recent-content">
-
-            <strong>
-              "നാളെ എനിക്ക്..."
-            </strong>
-
-            <small>
-              2 minutes ago
-            </small>
-
-          </div>
-
-          <button class="recent-play">
-            <i data-lucide="play"></i>
-          </button>
-
-        </div>
-
-
-        <div class="recent-item">
-
-          <div class="recent-language">
-            <span>EN</span>
-            <i data-lucide="arrow-right"></i>
-            <span>ML</span>
-          </div>
-
-          <div class="recent-content">
-
-            <strong>
-              "Where are you..."
-            </strong>
-
-            <small>
-              18 minutes ago
-            </small>
-
-          </div>
-
-          <button class="recent-play">
-            <i data-lucide="play"></i>
-          </button>
-
+        <div class="recent-loading">
+          Loading recent translations...
         </div>
 
       </div>
@@ -953,11 +2799,14 @@
   </main>
 
 
-  <!-- Error Toast -->
+  <!-- =====================================================
+       ERROR TOAST
+  ===================================================== -->
 
   <div
     class="error-toast"
     id="errorToast"
+    hidden
   >
 
     <span>
@@ -965,6 +2814,7 @@
     </span>
 
     <div>
+
       <strong id="errorTitle">
         Something went wrong
       </strong>
@@ -972,20 +2822,1838 @@
       <p id="errorMessage">
         Please try again.
       </p>
+
     </div>
 
-    <button id="closeError">
+    <button
+      id="closeError"
+      type="button"
+      aria-label="Close"
+    >
+
       <i data-lucide="x"></i>
+
     </button>
 
   </div>
 
 
-  <!-- Lucide -->
+  <!-- =====================================================
+       LUCIDE
+  ===================================================== -->
 
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <script src="/js/translate.js"></script>
 
+
+  <script>
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        /* =================================================
+           API
+        ================================================= */
+
+        const TRANSLATE_API =
+          "/api/translate";
+
+        const RECENT_TRANSLATIONS_API =
+          "/api/translations/recent?limit=3";
+
+
+        /* =================================================
+           STATE
+        ================================================= */
+
+        const state = {
+
+          source: {
+            name: "Malayalam",
+            code: "ML"
+          },
+
+          target: {
+            name: "English",
+            code: "EN"
+          },
+
+          languageTarget: "source",
+
+          recordedBlob: null,
+
+          originalAudioUrl: null,
+
+          translatedAudioUrl: null,
+
+          originalAudio: null,
+
+          translatedAudio: null
+
+        };
+
+
+        /* =================================================
+           ELEMENTS
+        ================================================= */
+
+        const sourceButton =
+          document.getElementById(
+            "sourceLanguage"
+          );
+
+        const targetButton =
+          document.getElementById(
+            "targetLanguage"
+          );
+
+        const sourceName =
+          document.getElementById(
+            "sourceLanguageName"
+          );
+
+        const sourceCode =
+          document.getElementById(
+            "sourceLanguageCode"
+          );
+
+        const targetName =
+          document.getElementById(
+            "targetLanguageName"
+          );
+
+        const targetCode =
+          document.getElementById(
+            "targetLanguageCode"
+          );
+
+        const languageMenu =
+          document.getElementById(
+            "languageMenu"
+          );
+
+        const swapButton =
+          document.getElementById(
+            "swapLanguages"
+          );
+
+        const translateButton =
+          document.getElementById(
+            "translateButton"
+          );
+
+        const recordedAudio =
+          document.getElementById(
+            "recordedAudio"
+          );
+
+        const recentList =
+          document.getElementById(
+            "recentTranslationsList"
+          );
+
+        const processingSection =
+          document.getElementById(
+            "processingSection"
+          );
+
+
+        /* =================================================
+           LUCIDE
+        ================================================= */
+
+        function refreshIcons() {
+
+          if (
+            window.lucide &&
+            typeof window.lucide.createIcons ===
+              "function"
+          ) {
+
+            window.lucide.createIcons();
+
+          }
+
+        }
+
+        refreshIcons();
+
+
+        /* =================================================
+           LANGUAGE UI
+        ================================================= */
+
+        function updateLanguageUI() {
+
+          sourceName.textContent =
+            state.source.name;
+
+          sourceCode.textContent =
+            state.source.code;
+
+          targetName.textContent =
+            state.target.name;
+
+          targetCode.textContent =
+            state.target.code;
+
+
+          const resultSource =
+            document.getElementById(
+              "resultSourceLanguage"
+            );
+
+          const resultTarget =
+            document.getElementById(
+              "resultTargetLanguage"
+            );
+
+
+          if (resultSource) {
+
+            resultSource.textContent =
+              state.source.name;
+
+          }
+
+
+          if (resultTarget) {
+
+            resultTarget.textContent =
+              state.target.name;
+
+          }
+
+
+          window.voiceBridgeLanguages = {
+
+            sourceLanguage:
+              state.source.name,
+
+            targetLanguage:
+              state.target.name,
+
+            sourceLanguageCode:
+              state.source.code,
+
+            targetLanguageCode:
+              state.target.code
+
+          };
+
+
+          document.dispatchEvent(
+            new CustomEvent(
+              "voicebridge:languagechange",
+              {
+                detail:
+                  window.voiceBridgeLanguages
+              }
+            )
+          );
+
+        }
+
+
+        /* =================================================
+           OPEN LANGUAGE MENU
+        ================================================= */
+
+        function openLanguageMenu(target) {
+
+          state.languageTarget =
+            target;
+
+          languageMenu.hidden = false;
+
+          sourceButton.setAttribute(
+            "aria-expanded",
+            target === "source"
+              ? "true"
+              : "false"
+          );
+
+          targetButton.setAttribute(
+            "aria-expanded",
+            target === "target"
+              ? "true"
+              : "false"
+          );
+
+
+          const buttons =
+            languageMenu.querySelectorAll(
+              "button[data-language]"
+            );
+
+
+          buttons.forEach(
+            function (button) {
+
+              const selectedLanguage =
+                button.dataset.language;
+
+              const selected =
+                (
+                  target === "source"
+                    ? state.source.name
+                    : state.target.name
+                ) === selectedLanguage;
+
+
+              button.classList.toggle(
+                "selected",
+                selected
+              );
+
+            }
+          );
+
+        }
+
+
+        /* =================================================
+           CLOSE LANGUAGE MENU
+        ================================================= */
+
+        function closeLanguageMenu() {
+
+          languageMenu.hidden = true;
+
+          sourceButton.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+          targetButton.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+        }
+
+
+        sourceButton.addEventListener(
+          "click",
+          function (event) {
+
+            event.stopPropagation();
+
+            if (languageMenu.hidden) {
+
+              openLanguageMenu("source");
+
+            } else {
+
+              closeLanguageMenu();
+
+            }
+
+          }
+        );
+
+
+        targetButton.addEventListener(
+          "click",
+          function (event) {
+
+            event.stopPropagation();
+
+            if (languageMenu.hidden) {
+
+              openLanguageMenu("target");
+
+            } else {
+
+              closeLanguageMenu();
+
+            }
+
+          }
+        );
+
+
+        /* =================================================
+           LANGUAGE SELECTION
+        ================================================= */
+
+        languageMenu
+          .querySelectorAll(
+            "button[data-language]"
+          )
+          .forEach(
+            function (button) {
+
+              button.addEventListener(
+                "click",
+                function () {
+
+                  const language =
+                    button.dataset.language;
+
+                  const code =
+                    button.dataset.code || "";
+
+
+                  if (
+                    state.languageTarget ===
+                    "source"
+                  ) {
+
+                    state.source = {
+                      name: language,
+                      code: code
+                    };
+
+                  } else {
+
+                    state.target = {
+                      name: language,
+                      code: code
+                    };
+
+                  }
+
+
+                  updateLanguageUI();
+
+
+                  openLanguageMenu(
+                    state.languageTarget
+                  );
+
+
+                  const selectedButton =
+                    state.languageTarget ===
+                    "source"
+                      ? sourceButton
+                      : targetButton;
+
+
+                  selectedButton.classList.remove(
+                    "language-selected"
+                  );
+
+
+                  void selectedButton.offsetWidth;
+
+
+                  selectedButton.classList.add(
+                    "language-selected"
+                  );
+
+
+                  setTimeout(
+                    function () {
+
+                      selectedButton.classList.remove(
+                        "language-selected"
+                      );
+
+                    },
+                    450
+                  );
+
+                }
+              );
+
+            }
+          );
+
+
+        /* =================================================
+           LANGUAGE SELECTION ANIMATION
+        ================================================= */
+
+        const languageStyle =
+          document.createElement(
+            "style"
+          );
+
+        languageStyle.textContent = `
+
+          .language-selected {
+            animation:
+              languageSelected .45s
+              cubic-bezier(.16,1,.3,1);
+          }
+
+          @keyframes languageSelected {
+
+            0% {
+              transform: scale(1);
+            }
+
+            50% {
+              transform: scale(1.015);
+            }
+
+            100% {
+              transform: scale(1);
+            }
+
+          }
+
+        `;
+
+        document.head.appendChild(
+          languageStyle
+        );
+
+
+        /* =================================================
+           CLOSE MENU OUTSIDE
+        ================================================= */
+
+        document.addEventListener(
+          "click",
+          function (event) {
+
+            if (
+              !languageMenu.contains(
+                event.target
+              ) &&
+              !sourceButton.contains(
+                event.target
+              ) &&
+              !targetButton.contains(
+                event.target
+              )
+            ) {
+
+              closeLanguageMenu();
+
+            }
+
+          }
+        );
+
+
+        document.addEventListener(
+          "keydown",
+          function (event) {
+
+            if (event.key === "Escape") {
+
+              closeLanguageMenu();
+
+            }
+
+          }
+        );
+
+
+        /* =================================================
+           SWAP
+        ================================================= */
+
+        swapButton.addEventListener(
+          "click",
+          function () {
+
+            const oldSource =
+              state.source;
+
+            state.source =
+              state.target;
+
+            state.target =
+              oldSource;
+
+
+            updateLanguageUI();
+
+
+            document.dispatchEvent(
+              new CustomEvent(
+                "voicebridge:languageswap",
+                {
+                  detail: {
+                    source:
+                      state.source,
+
+                    target:
+                      state.target
+                  }
+                }
+              )
+            );
+
+          }
+        );
+
+
+        /* =================================================
+           GLOBAL STATE
+        ================================================= */
+
+        window.voiceBridgeLanguages = {
+
+          sourceLanguage:
+            state.source.name,
+
+          targetLanguage:
+            state.target.name,
+
+          sourceLanguageCode:
+            state.source.code,
+
+          targetLanguageCode:
+            state.target.code
+
+        };
+
+
+        window.voiceBridgeState =
+          state;
+
+
+        updateLanguageUI();
+
+
+        /* =================================================
+           PROCESSING
+        ================================================= */
+
+        function resetProcessingSteps() {
+
+          if (!processingSection) {
+            return;
+          }
+
+
+          const steps =
+            processingSection.querySelectorAll(
+              ".processing-step"
+            );
+
+
+          steps.forEach(
+            function (step) {
+
+              step.classList.remove(
+                "completed",
+                "active"
+              );
+
+
+              const stateElement =
+                step.querySelector(
+                  ".step-state"
+                );
+
+
+              if (stateElement) {
+
+                stateElement.innerHTML =
+                  "";
+
+              }
+
+            }
+          );
+
+        }
+
+
+        function completeProcessingStep(
+          index
+        ) {
+
+          if (!processingSection) {
+            return;
+          }
+
+
+          const steps =
+            processingSection.querySelectorAll(
+              ".processing-step"
+            );
+
+
+          const step =
+            steps[index];
+
+
+          if (!step) {
+            return;
+          }
+
+
+          step.classList.remove(
+            "active"
+          );
+
+          step.classList.add(
+            "completed"
+          );
+
+
+          const stateElement =
+            step.querySelector(
+              ".step-state"
+            );
+
+
+          if (stateElement) {
+
+            stateElement.innerHTML =
+              '<i data-lucide="check"></i>';
+
+          }
+
+
+          refreshIcons();
+
+        }
+
+
+        function activateProcessingStep(
+          index
+        ) {
+
+          if (!processingSection) {
+            return;
+          }
+
+
+          const steps =
+            processingSection.querySelectorAll(
+              ".processing-step"
+            );
+
+
+          const step =
+            steps[index];
+
+
+          if (!step) {
+            return;
+          }
+
+
+          step.classList.remove(
+            "completed"
+          );
+
+          step.classList.add(
+            "active"
+          );
+
+        }
+
+
+        window.startVoiceBridgeProcessing =
+          function () {
+
+            if (!processingSection) {
+              return;
+            }
+
+
+            processingSection.hidden =
+              false;
+
+
+            resetProcessingSteps();
+
+
+            completeProcessingStep(
+              0
+            );
+
+
+            setTimeout(
+              function () {
+
+                completeProcessingStep(
+                  1
+                );
+
+              },
+              550
+            );
+
+
+            setTimeout(
+              function () {
+
+                activateProcessingStep(
+                  2
+                );
+
+              },
+              850
+            );
+
+
+            refreshIcons();
+
+          };
+
+
+        window.stopVoiceBridgeProcessing =
+          function () {
+
+            if (!processingSection) {
+              return;
+            }
+
+
+            completeProcessingStep(
+              2
+            );
+
+
+            setTimeout(
+              function () {
+
+                activateProcessingStep(
+                  3
+                );
+
+              },
+              250
+            );
+
+
+            setTimeout(
+              function () {
+
+                completeProcessingStep(
+                  3
+                );
+
+              },
+              800
+            );
+
+
+            refreshIcons();
+
+          };
+
+
+        /* =================================================
+           TRANSLATION START EVENT
+        ================================================= */
+
+        document.addEventListener(
+          "voicebridge:translation-start",
+          function () {
+
+            window.startVoiceBridgeProcessing();
+
+          }
+        );
+
+
+        /* =================================================
+           TRANSLATION COMPLETE EVENT
+        ================================================= */
+
+        document.addEventListener(
+          "voicebridge:translation-complete",
+          function () {
+
+            window.stopVoiceBridgeProcessing();
+
+          }
+        );
+
+
+        document.addEventListener(
+          "voicebridge:translationcomplete",
+          function () {
+
+            window.stopVoiceBridgeProcessing();
+
+          }
+        );
+
+
+        /* =================================================
+           RECORDING EVENTS
+        ================================================= */
+
+        document.addEventListener(
+          "voicebridge:recorded",
+          function (event) {
+
+            if (
+              event.detail &&
+              event.detail.blob
+            ) {
+
+              state.recordedBlob =
+                event.detail.blob;
+
+            }
+
+
+            if (translateButton) {
+
+              translateButton.disabled =
+                !state.recordedBlob;
+
+            }
+
+          }
+        );
+
+
+        if (recordedAudio) {
+
+          recordedAudio.addEventListener(
+            "loadeddata",
+            function () {
+
+              if (
+                recordedAudio.src &&
+                recordedAudio.src !==
+                  window.location.href
+              ) {
+
+                state.originalAudioUrl =
+                  recordedAudio.src;
+
+                state.originalAudio =
+                  recordedAudio;
+
+              }
+
+            }
+          );
+
+        }
+
+
+        /* =================================================
+           RECENT TRANSLATIONS
+        ================================================= */
+
+        function getRecentArray(
+          payload
+        ) {
+
+          if (Array.isArray(payload)) {
+            return payload;
+          }
+
+          if (
+            payload &&
+            Array.isArray(payload.data)
+          ) {
+            return payload.data;
+          }
+
+          if (
+            payload &&
+            Array.isArray(payload.translations)
+          ) {
+            return payload.translations;
+          }
+
+          if (
+            payload &&
+            Array.isArray(payload.items)
+          ) {
+            return payload.items;
+          }
+
+          if (
+            payload &&
+            Array.isArray(payload.results)
+          ) {
+            return payload.results;
+          }
+
+          return [];
+
+        }
+
+
+        function firstValue(
+          object,
+          keys,
+          fallback = ""
+        ) {
+
+          for (
+            const key of keys
+          ) {
+
+            if (
+              object &&
+              object[key] !== undefined &&
+              object[key] !== null &&
+              object[key] !== ""
+            ) {
+
+              return object[key];
+
+            }
+
+          }
+
+          return fallback;
+
+        }
+
+
+        function normalizeRecentItem(
+          item
+        ) {
+
+          const sourceLanguage =
+            firstValue(
+              item,
+              [
+                "sourceLanguage",
+                "source_language",
+                "source",
+                "fromLanguage",
+                "from"
+              ],
+              "ML"
+            );
+
+
+          const targetLanguage =
+            firstValue(
+              item,
+              [
+                "targetLanguage",
+                "target_language",
+                "target",
+                "toLanguage",
+                "to"
+              ],
+              "EN"
+            );
+
+
+          const sourceCode =
+            firstValue(
+              item,
+              [
+                "sourceLanguageCode",
+                "source_language_code",
+                "sourceCode",
+                "source_code",
+                "fromCode"
+              ],
+              sourceLanguage
+            );
+
+
+          const targetCode =
+            firstValue(
+              item,
+              [
+                "targetLanguageCode",
+                "target_language_code",
+                "targetCode",
+                "target_code",
+                "toCode"
+              ],
+              targetLanguage
+            );
+
+
+          const text =
+            firstValue(
+              item,
+              [
+                "transcript",
+                "sourceText",
+                "source_text",
+                "originalText",
+                "original_text",
+                "text",
+                "inputText",
+                "input_text"
+              ],
+              "Voice translation"
+            );
+
+
+          const audioUrl =
+            firstValue(
+              item,
+              [
+                "audioUrl",
+                "audio_url",
+                "translatedAudioUrl",
+                "translated_audio_url",
+                "outputAudioUrl",
+                "output_audio_url",
+                "audio",
+                "url"
+              ],
+              ""
+            );
+
+
+          const createdAt =
+            firstValue(
+              item,
+              [
+                "createdAt",
+                "created_at",
+                "timestamp",
+                "date",
+                "time"
+              ],
+              ""
+            );
+
+
+          return {
+
+            sourceLanguage:
+              sourceLanguage,
+
+            targetLanguage:
+              targetLanguage,
+
+            sourceCode:
+              String(
+                sourceCode
+              ).toUpperCase(),
+
+            targetCode:
+              String(
+                targetCode
+              ).toUpperCase(),
+
+            text:
+              String(text),
+
+            audioUrl:
+              audioUrl,
+
+            createdAt:
+              createdAt
+
+          };
+
+        }
+
+
+        /* =================================================
+           TIME
+        ================================================= */
+
+        function formatRecentTime(
+          value
+        ) {
+
+          if (!value) {
+            return "";
+          }
+
+
+          const date =
+            new Date(value);
+
+
+          if (
+            Number.isNaN(
+              date.getTime()
+            )
+          ) {
+
+            return String(value);
+
+          }
+
+
+          const diff =
+            Date.now() -
+            date.getTime();
+
+
+          const seconds =
+            Math.floor(
+              diff / 1000
+            );
+
+          const minutes =
+            Math.floor(
+              seconds / 60
+            );
+
+          const hours =
+            Math.floor(
+              minutes / 60
+            );
+
+          const days =
+            Math.floor(
+              hours / 24
+            );
+
+
+          if (seconds < 60) {
+            return "Just now";
+          }
+
+
+          if (minutes < 60) {
+
+            return (
+              minutes +
+              (
+                minutes === 1
+                  ? " minute ago"
+                  : " minutes ago"
+              )
+            );
+
+          }
+
+
+          if (hours < 24) {
+
+            return (
+              hours +
+              (
+                hours === 1
+                  ? " hour ago"
+                  : " hours ago"
+              )
+            );
+
+          }
+
+
+          if (days < 7) {
+
+            return (
+              days +
+              (
+                days === 1
+                  ? " day ago"
+                  : " days ago"
+              )
+            );
+
+          }
+
+
+          return date.toLocaleDateString(
+            undefined,
+            {
+              day: "numeric",
+              month: "short",
+              year: "numeric"
+            }
+          );
+
+        }
+
+
+        /* =================================================
+           SAFE HTML
+        ================================================= */
+
+        function escapeHtml(
+          value
+        ) {
+
+          return String(value)
+            .replace(
+              /&/g,
+              "&amp;"
+            )
+            .replace(
+              /</g,
+              "&lt;"
+            )
+            .replace(
+              />/g,
+              "&gt;"
+            )
+            .replace(
+              /"/g,
+              "&quot;"
+            )
+            .replace(
+              /'/g,
+              "&#039;"
+            );
+
+        }
+
+
+        function resolveAudioUrl(
+          audioUrl
+        ) {
+
+          if (!audioUrl) {
+            return "";
+          }
+
+
+          try {
+
+            return new URL(
+              audioUrl,
+              window.location.href
+            ).href;
+
+          } catch (error) {
+
+            return audioUrl;
+
+          }
+
+        }
+
+
+        /* =================================================
+           RECENT RENDER
+        ================================================= */
+
+        function renderRecentTranslations(
+          items
+        ) {
+
+          recentList.innerHTML =
+            "";
+
+
+          if (!items.length) {
+
+            recentList.innerHTML = `
+
+              <div class="recent-empty">
+                No recent translations yet.
+              </div>
+
+            `;
+
+            return;
+
+          }
+
+
+          items
+            .slice(0, 3)
+            .map(normalizeRecentItem)
+            .forEach(
+              function (
+                item,
+                index
+              ) {
+
+                const recentItem =
+                  document.createElement(
+                    "div"
+                  );
+
+
+                recentItem.className =
+                  "recent-item recent-item-enter";
+
+
+                recentItem.style.animationDelay =
+                  (
+                    index * 70
+                  ) + "ms";
+
+
+                const cleanText =
+                  item.text
+                    .replace(
+                      /\s+/g,
+                      " "
+                    )
+                    .trim();
+
+
+                const shortText =
+                  cleanText.slice(
+                    0,
+                    42
+                  );
+
+
+                recentItem.innerHTML = `
+
+                  <div class="recent-language">
+
+                    <span>
+                      ${escapeHtml(
+                        item.sourceCode
+                      )}
+                    </span>
+
+                    <i data-lucide="arrow-right"></i>
+
+                    <span>
+                      ${escapeHtml(
+                        item.targetCode
+                      )}
+                    </span>
+
+                  </div>
+
+                  <div class="recent-content">
+
+                    <strong>
+                      "${escapeHtml(
+                        shortText
+                      )}${cleanText.length > 42 ? "..." : ""}"
+                    </strong>
+
+                    <small>
+                      ${escapeHtml(
+                        formatRecentTime(
+                          item.createdAt
+                        )
+                      )}
+                    </small>
+
+                  </div>
+
+                  <button
+                    class="recent-play"
+                    type="button"
+                    aria-label="Play recent translation"
+                    ${item.audioUrl
+                      ? ""
+                      : "disabled"}
+                  >
+
+                    <i data-lucide="play"></i>
+
+                  </button>
+
+                `;
+
+
+                const playButton =
+                  recentItem.querySelector(
+                    ".recent-play"
+                  );
+
+
+                if (item.audioUrl) {
+
+                  const audioUrl =
+                    resolveAudioUrl(
+                      item.audioUrl
+                    );
+
+
+                  playButton.addEventListener(
+                    "click",
+                    function () {
+
+                      const audio =
+                        new Audio(
+                          audioUrl
+                        );
+
+
+                      audio.play()
+                        .catch(
+                          function () {
+
+                            showError(
+                              "Audio Error",
+                              "Unable to play this translation."
+                            );
+
+                          }
+                        );
+
+                    }
+                  );
+
+                }
+
+
+                recentList.appendChild(
+                  recentItem
+                );
+
+              }
+            );
+
+
+          refreshIcons();
+
+        }
+
+
+        /* =================================================
+           LOAD RECENT
+        ================================================= */
+
+        async function loadRecentTranslations() {
+
+          recentList.innerHTML = `
+
+            <div class="recent-loading">
+              Loading recent translations...
+            </div>
+
+          `;
+
+
+          try {
+
+            const response =
+              await fetch(
+                RECENT_TRANSLATIONS_API,
+                {
+                  method: "GET",
+
+                  credentials: "include",
+
+                  headers: {
+                    "Accept":
+                      "application/json"
+                  }
+
+                }
+              );
+
+
+            if (!response.ok) {
+
+              throw new Error(
+                "Unable to load recent translations."
+              );
+
+            }
+
+
+            const payload =
+              await response.json();
+
+
+            const items =
+              getRecentArray(
+                payload
+              );
+
+
+            renderRecentTranslations(
+              items.slice(0, 3)
+            );
+
+          } catch (error) {
+
+            console.error(
+              "Recent translations error:",
+              error
+            );
+
+
+            recentList.innerHTML = `
+
+              <div class="recent-error">
+                Recent translations could not be loaded.
+              </div>
+
+            `;
+
+          }
+
+        }
+
+
+        /* =================================================
+           RECENT AFTER TRANSLATION
+        ================================================= */
+
+        document.addEventListener(
+          "voicebridge:translationcomplete",
+          function () {
+
+            loadRecentTranslations();
+
+          }
+        );
+
+
+        document.addEventListener(
+          "voicebridge:translation-complete",
+          function () {
+
+            loadRecentTranslations();
+
+          }
+        );
+
+
+        document.addEventListener(
+          "translation:complete",
+          function () {
+
+            loadRecentTranslations();
+
+          }
+        );
+
+
+        /* =================================================
+           ERROR
+        ================================================= */
+
+        function showError(
+          title,
+          message
+        ) {
+
+          const toast =
+            document.getElementById(
+              "errorToast"
+            );
+
+          const titleElement =
+            document.getElementById(
+              "errorTitle"
+            );
+
+          const messageElement =
+            document.getElementById(
+              "errorMessage"
+            );
+
+
+          if (!toast) {
+            return;
+          }
+
+
+          titleElement.textContent =
+            title ||
+            "Something went wrong";
+
+
+          messageElement.textContent =
+            message ||
+            "Please try again.";
+
+
+          toast.hidden =
+            false;
+
+
+          refreshIcons();
+
+
+          setTimeout(
+            function () {
+
+              toast.hidden =
+                true;
+
+            },
+            5000
+          );
+
+        }
+
+
+        const closeError =
+          document.getElementById(
+            "closeError"
+          );
+
+
+        if (closeError) {
+
+          closeError.addEventListener(
+            "click",
+            function () {
+
+              document.getElementById(
+                "errorToast"
+              ).hidden = true;
+
+            }
+          );
+
+        }
+
+
+        /* =================================================
+           LOAD RECENT
+        ================================================= */
+
+        loadRecentTranslations();
+
+
+        /* =================================================
+           VOICEBRIDGE API
+        ================================================= */
+
+        window.VoiceBridge = {
+
+          getLanguages:
+            function () {
+
+              return {
+
+                source:
+                  state.source,
+
+                target:
+                  state.target
+
+              };
+
+            },
+
+
+          getLanguagePayload:
+            function () {
+
+              return {
+
+                sourceLanguage:
+                  state.source.name,
+
+                targetLanguage:
+                  state.target.name,
+
+                sourceLanguageCode:
+                  state.source.code,
+
+                targetLanguageCode:
+                  state.target.code
+
+              };
+
+            },
+
+
+          reloadRecent:
+            loadRecentTranslations,
+
+
+          showError:
+            showError
+
+        };
+
+
+        /* =================================================
+           RECORDING READY
+        ================================================= */
+
+        document.addEventListener(
+          "voicebridge:recordingready",
+          function (event) {
+
+            if (
+              event.detail &&
+              event.detail.blob
+            ) {
+
+              state.recordedBlob =
+                event.detail.blob;
+
+            }
+
+
+            if (translateButton) {
+
+              translateButton.disabled =
+                false;
+
+            }
+
+          }
+        );
+
+
+        /* =================================================
+           RECORDING DELETED
+        ================================================= */
+
+        document.addEventListener(
+          "voicebridge:recordingdeleted",
+          function () {
+
+            state.recordedBlob =
+              null;
+
+            state.originalAudioUrl =
+              null;
+
+
+            if (translateButton) {
+
+              translateButton.disabled =
+                true;
+
+            }
+
+          }
+        );
+
+
+        /* =================================================
+           TRANSLATE BUTTON
+        ================================================= */
+
+        if (translateButton) {
+
+          translateButton.addEventListener(
+            "click",
+            function () {
+
+              /*
+               * Show processing immediately.
+               */
+
+              window.startVoiceBridgeProcessing();
+
+
+              /*
+               * Keep existing translate.js
+               * bridge unchanged.
+               */
+
+              document.dispatchEvent(
+                new CustomEvent(
+                  "voicebridge:translate",
+                  {
+                    detail:
+                      window.VoiceBridge
+                        .getLanguagePayload()
+                  }
+                )
+              );
+
+            },
+            true
+          );
+
+        }
+
+
+        /* =================================================
+           INITIAL UI
+        ================================================= */
+
+        updateLanguageUI();
+
+        refreshIcons();
+
+      });
+
+  </script>
+
 </body>
+
 </html>
