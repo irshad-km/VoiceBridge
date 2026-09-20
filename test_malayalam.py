@@ -12,10 +12,12 @@ audio_path = sys.argv[1]
 print("Loading Malayalam model...", file=sys.stderr)
 
 model = onnx_asr.load_model(
-    "OpenVoiceOS/ai4bharat-indicconformer-ml-onnx"
+    "OpenVoiceOS/ai4bharat-indicconformer-ml-onnx",
+    quantization="int8"
 )
 
 print("Model loaded!", file=sys.stderr)
+
 print("Transcribing...", file=sys.stderr)
 
 result = model.recognize(audio_path)
