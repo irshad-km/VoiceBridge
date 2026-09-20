@@ -944,12 +944,13 @@ footer a:hover {
         </button>
 
 
-        <button
-            class="action-btn secondary"
-            onclick="downloadText()"
-        >
-            ↓ Download
-        </button>
+    <a
+    href="<%= translation.translatedAudioUrl %>"
+    download="voicebridge-translated-audio.mp3"
+    class="action-btn secondary"
+>
+    ↓ Download Audio
+</a>
 
 
         <!-- ================= WHATSAPP ================= -->
@@ -1150,81 +1151,71 @@ function copyText(id) {
 
 /* ================= DOWNLOAD ================= */
 
-function downloadText() {
 
-    const element =
-        document.getElementById("translatedText");
-
-    if (!element) {
-        return;
-    }
-
-    const text =
-        element.innerText;
-
-    const blob =
-        new Blob(
-            [text],
-            {
-                type: "text/plain"
-            }
-        );
-
-    const url =
-        URL.createObjectURL(blob);
-
-    const a =
-        document.createElement("a");
-
-    a.href = url;
-
-    a.download =
-        "translation.txt";
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    document.body.removeChild(a);
-
-    URL.revokeObjectURL(url);
-
-}
 
 
 /* ================= WHATSAPP ================= */
 
-function shareToWhatsApp() {
+async function shareToWhatsApp() {
 
-    const element =
-        document.getElementById("translatedText");
+    const audio =
+        document.getElementById("translatedAudio");
 
-    if (!element) {
-
-        alert("Translated text is not available.");
-
+    if (!audio || !audio.src) {
+        alert("Translated audio is not available.");
         return;
     }
 
-    const text =
-        element.innerText.trim();
+    try {
 
-    if (!text) {
+        const response = await fetch(audio.src);
 
-        alert("There is no translated text to share.");
+        if (!response.ok) {
+            throw new Error("Audio download failed");
+        }
 
-        return;
+        const blob = await response.blob();
+
+        const file = new File(
+            [blob],
+            "voicebridge-translated-audio.mp3",
+            {
+                type: "audio/mpeg"
+            }
+        );
+
+        if (
+            navigator.share &&
+            navigator.canShare &&
+            navigator.canShare({ files: [file] })
+        ) {
+
+            await navigator.share({
+                files: [file],
+                title: "VoiceBridge Translation",
+                text: "Translated audio from VoiceBridge"
+            });
+
+        } else {
+
+            alert(
+                "Direct audio sharing is not supported on this browser. Please download the audio and share it on WhatsApp."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "WhatsApp audio share error:",
+            error
+        );
+
+        if (error.name !== "AbortError") {
+            alert("Could not share the translated audio.");
+        }
+
     }
-
-    const whatsappUrl =
-        "https://wa.me/?text=" +
-        encodeURIComponent(text);
-
-    window.open(
-        whatsappUrl,
-        "_blank"
-    );
-
 }
 
 
